@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 @Entity()
-export default class User {
-  @PrimaryGeneratedColumn('increment')
+export class UserEntity {
+  @PrimaryGeneratedColumn('uuid')
   id: string
 
   @Column({ unique: true })
