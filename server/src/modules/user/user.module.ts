@@ -7,5 +7,9 @@ export function bootstrapUserModule(router: Router) {
 
   router.get(`${prefix}/`, userController.getUsers.bind(userController))
   router.get(`${prefix}/:id`, userController.getUser.bind(userController))
-  router.post(`${prefix}`, userController.createUser.bind(userController))
+  router.post(`${prefix}/login`, userController.login.bind(userController))
+  router.post(
+    `${prefix}/register`,
+    userController.createUser.bind(userController),
+  )
 }

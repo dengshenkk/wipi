@@ -33,6 +33,17 @@ class UserController {
     ctx.body = { data: user }
   }
 
+  async login(ctx: Koa.Context) {
+    const { name, password } = ctx.request.body
+    const user = await this.repo.findOne({ name, password })
+
+    if (!user) {
+      ctx.throw(HTTPStatusCodes.BAD_REQUEST)
+    }
+
+    ctx.body = { data: user }
+  }
+
   /**
    * 创建用户
    * @param ctx

@@ -12,7 +12,7 @@ const config: IConfig = {
     port: 3000,
   },
   router: {
-    prefix: '/',
+    prefix: '/api/v1',
   },
 }
 export default config
