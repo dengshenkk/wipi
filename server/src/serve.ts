@@ -1,7 +1,8 @@
 import { connectPostgreSQL } from './connectPostgreSQL'
-import { bootstrapApp } from './setupApp'
+import { bootstrapApp } from './bootstrapApp'
+import config from './config'
 
-const PORT: number = 3000
+const PORT: number = config.app.port
 
 connectPostgreSQL()
   .then(() => {

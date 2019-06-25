@@ -1,13 +1,14 @@
 import 'reflect-metadata'
 import { createConnection, Connection, ConnectionOptions } from 'typeorm'
+import config from './config'
 
 const connectionOps: ConnectionOptions = {
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'plarum',
-  password: 'plarum',
-  database: 'plarum',
+  host: config.database.host,
+  port: config.database.port,
+  username: config.database.username,
+  password: config.database.password,
+  database: config.database.database,
   entities: ['./**/*.entity.ts'],
   synchronize: true,
 }

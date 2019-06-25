@@ -5,7 +5,7 @@ import { bootstrapErrorHandlerMiddleware } from './middlewares/error'
 export function bootstrapMiddlewares(app: Koa) {
   void [bodyparser, bootstrapErrorHandlerMiddleware].forEach(
     bootstrapMiddleware => {
-      bootstrapMiddleware(app)
+      app.use(bootstrapMiddleware())
     },
   )
 }
