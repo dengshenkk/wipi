@@ -1,14 +1,15 @@
 import * as Koa from 'koa'
 import * as Router from 'koa-router'
-import withControllers from './controllers'
-import withMiddlewares from './middlewares'
+import { bootstrapModules } from './bootstrapModules'
+import { bootstrapMiddlewares } from './bootstrapMiddlewares'
 
-export default function setupApp(port: number) {
+export function bootstrapApp(port: number) {
   const app: Koa = new Koa()
+
   const router: Router = new Router()
 
-  withMiddlewares(app)
-  withControllers(app, router)
+  bootstrapMiddlewares(app)
+  bootstrapModules(app, router)
 
   // 错误日志
   app.on('error', console.error)

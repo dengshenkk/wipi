@@ -1,7 +1,7 @@
 import * as Koa from 'koa'
 import * as HttpStatusCodes from 'http-status-codes'
 
-export default function withErrorHandlerMiddleware(app: Koa) {
+export function bootstrapErrorHandlerMiddleware(app: Koa) {
   app.use(async (ctx: Koa.Context, next: () => Promise<any>) => {
     try {
       await next()

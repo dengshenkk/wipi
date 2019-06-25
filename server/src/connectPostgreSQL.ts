@@ -12,6 +12,6 @@ const connectionOps: ConnectionOptions = {
   synchronize: true,
 }
 
-export default function withDatabaseConnection(): Promise<any> {
+export function connectPostgreSQL(): Promise<any> {
   return createConnection(connectionOps)
 }

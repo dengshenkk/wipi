@@ -1,12 +1,12 @@
-import setupApp from './setupApp'
-import withDatabaseConnection from './database'
+import { connectPostgreSQL } from './connectPostgreSQL'
+import { bootstrapApp } from './setupApp'
 
 const PORT: number = 3000
 
-withDatabaseConnection()
+connectPostgreSQL()
   .then(() => {
     console.log('Connect to PostgreSQL successfully.')
-    setupApp(PORT)
+    bootstrapApp(PORT)
   })
   .catch(err => {
     console.error('Connect to PostgreSQL failed.')

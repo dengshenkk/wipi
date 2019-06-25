@@ -2,7 +2,7 @@ import * as Koa from 'koa'
 import * as Router from 'koa-router'
 import userController from './user.controller'
 
-export default function withUserController(router: Router) {
+export function bootstrapUserModule(router: Router) {
   const prefix = '/user'
 
   router.get(`${prefix}/`, userController.getUsers.bind(userController))
