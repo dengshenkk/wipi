@@ -1,7 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
+export interface IToc {
+  level: number
+  anchor: string
+  title: string
+}
+
 @Entity()
-export default class ArticleEntity {
+export class ArticleEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
@@ -13,6 +19,12 @@ export default class ArticleEntity {
 
   @Column('text')
   content: string
+
+  @Column('text')
+  html: string
+
+  @Column('simple-array')
+  toc: IToc[]
 
   @Column('simple-array')
   tags: string[]
