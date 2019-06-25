@@ -1,13 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 
 @Entity()
 export default class User {
-  @PrimaryGeneratedColumn("increment")
-  id: string;
+  @PrimaryGeneratedColumn('increment')
+  id: string
 
   @Column({ unique: true })
-  name: string;
+  name: string
 
   @Column()
-  password: string;
+  password: string
 }
