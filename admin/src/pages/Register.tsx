@@ -11,7 +11,7 @@ function hasErrors(fieldsError: any) {
 
 interface IProps extends FormComponentProps {}
 
-const LoginForm = (props: IProps) => {
+const RegisterForm = (props: IProps) => {
   const { t } = useTranslation();
   const { form } = props;
   const { getFieldDecorator, getFieldsError } = form;
@@ -32,6 +32,18 @@ const LoginForm = (props: IProps) => {
     }
   };
 
+  const compareToFirstPassword = (
+    rule: any,
+    value: string,
+    callback: Function
+  ) => {
+    if (value && value === form.getFieldValue("password")) {
+      callback();
+    } else {
+      callback(t("twoPasswordNotEqual"));
+    }
+  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
@@ -49,7 +61,7 @@ const LoginForm = (props: IProps) => {
           maxWidth: 368
         }}
       >
-        <h2>{t("login")}</h2>
+        <h2>{t("register")}</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Item>
             {getFieldDecorator("username", {
@@ -59,7 +71,7 @@ const LoginForm = (props: IProps) => {
                 prefix={
                   <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                 }
-                placeholder={t("usernameValidateInfo")}
+                placeholder={t("username")}
               />
             )}
           </Form.Item>
@@ -77,15 +89,28 @@ const LoginForm = (props: IProps) => {
             )}
           </Form.Item>
           <Form.Item>
+            {getFieldDecorator("confirm", {
+              rules: [{ validator: compareToFirstPassword }]
+            })(
+              <Input
+                type="password"
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                placeholder={t("confirmPassword")}
+              />
+            )}
+          </Form.Item>
+          <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
               disabled={hasErrors(getFieldsError())}
               style={{ width: "100%" }}
             >
-              {t("login")}
+              {t("register")}
             </Button>
-            Or <Link to="/register">{t("register")}</Link>
+            Or <Link to="/login">{t("login")}</Link>
           </Form.Item>
         </Form>
       </div>
@@ -93,4 +118,4 @@ const LoginForm = (props: IProps) => {
   );
 };
 
-export const Login = Form.create({ name: "login" })(LoginForm);
+export const Register = Form.create({ name: "register" })(RegisterForm);

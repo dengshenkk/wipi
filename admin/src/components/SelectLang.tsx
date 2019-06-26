@@ -35,7 +35,7 @@ export const SelectLang = () => {
 
   return (
     <Dropdown overlay={menu}>
-      <Icon type="global" />
+      <Icon type="global" style={{ fontSize: 18 }} />
     </Dropdown>
   );
 };

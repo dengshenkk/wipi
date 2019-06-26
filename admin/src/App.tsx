@@ -1,14 +1,12 @@
 import * as React from "react";
-import { UserLayout } from "./layouts/UserLayout";
-import { Login } from "./pages/Login";
+import { BrowserRouter } from "react-router-dom";
+import { Router } from "./router";
 
 function App() {
   return (
-    <>
-      <UserLayout>
-        <Login />
-      </UserLayout>
-    </>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   );
 }
 

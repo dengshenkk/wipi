@@ -4,5 +4,7 @@ export default {
   username: "Usrename",
   usernameValidateInfo: "length should between 4 and 16",
   password: "Password",
-  passwordValidateInfo: "At least 6-digit password, case sensitive"
+  passwordValidateInfo: "At least 6-digit password, case sensitive",
+  confirmPassword: "Confirm Password",
+  twoPasswordNotEqual: "Two passwords are inconsistent"
 };
