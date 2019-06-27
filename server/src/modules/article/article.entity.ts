@@ -20,6 +20,9 @@ export class ArticleEntity {
   @Column('text')
   content: string
 
+  @Column('string')
+  cover: string
+
   @Column('text')
   html: string
 
@@ -31,6 +34,12 @@ export class ArticleEntity {
 
   @Column('simple-enum', { enum: ['draft', 'publish'] })
   status: string
+
+  @Column({ type: 'timestamp' })
+  publishAt: string
+
+  @Column('number')
+  views: number
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createAt: string
