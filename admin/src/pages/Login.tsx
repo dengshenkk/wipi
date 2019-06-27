@@ -67,7 +67,7 @@ const LoginForm = (props: IProps) => {
             {getFieldDecorator("password", {
               rules: [{ validator: validatePassword }]
             })(
-              <Input
+              <Input.Password
                 type="password"
                 prefix={
                   <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />

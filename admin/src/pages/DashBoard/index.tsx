@@ -1,12 +1,10 @@
 import React from "react";
-import { Statistic, Card, Row, Col, Icon } from "antd";
+import { Statistic, Row, Icon } from "antd";
 import { BasicLayout } from "../../layouts/BasicLayout";
 import { CardContainer } from "./CardContainer";
 import { LineChart } from "./LineChart";
 import { AreaChart } from "./AreaChart";
 import { ProgressChart } from "./ProgressChart";
-
-import { MDEditor } from "../../components/MDEditor";
 
 export const DashBoard: React.FC = () => {
   return (

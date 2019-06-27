@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
 import { DashBoard } from "../pages/DashBoard";
+import { ArticleEditor } from "../pages/ArticleEditor";
 
 export const routes = [
   {
@@ -24,6 +25,13 @@ export const routes = [
     icon: "global",
     title: "register",
     component: Register
+  },
+
+  {
+    path: "/article/add",
+    icon: "global",
+    title: "articleEditor",
+    component: ArticleEditor
   }
 ];
 

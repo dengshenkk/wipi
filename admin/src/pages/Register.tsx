@@ -79,7 +79,7 @@ const RegisterForm = (props: IProps) => {
             {getFieldDecorator("password", {
               rules: [{ validator: validatePassword }]
             })(
-              <Input
+              <Input.Password
                 type="password"
                 prefix={
                   <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
@@ -92,7 +92,7 @@ const RegisterForm = (props: IProps) => {
             {getFieldDecorator("confirm", {
               rules: [{ validator: compareToFirstPassword }]
             })(
-              <Input
+              <Input.Password
                 type="password"
                 prefix={
                   <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
