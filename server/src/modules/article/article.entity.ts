@@ -1,10 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
-
-export interface IToc {
-  level: number
-  anchor: string
-  title: string
-}
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm'
+import { TagEntity } from '../tag/tag.entity'
+import { ITag } from '../tag/tag.interface'
+import { IToc } from './article.interface'
 
 @Entity()
 export class ArticleEntity {
@@ -20,7 +23,7 @@ export class ArticleEntity {
   @Column('text')
   content: string
 
-  @Column('string')
+  @Column()
   cover: string
 
   @Column('text')
@@ -29,8 +32,9 @@ export class ArticleEntity {
   @Column('simple-array')
   toc: IToc[]
 
-  @Column('simple-array')
-  tags: string[]
+  @ManyToMany(type => TagEntity, (tag: ITag) => tag.articles, { cascade: true })
+  @JoinTable()
+  tags: ITag[]
 
   @Column('simple-enum', { enum: ['draft', 'publish'] })
   status: string
@@ -38,7 +42,7 @@ export class ArticleEntity {
   @Column({ type: 'timestamp' })
   publishAt: string
 
-  @Column('number')
+  @Column('int')
   views: number
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

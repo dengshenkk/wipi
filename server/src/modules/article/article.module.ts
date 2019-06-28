@@ -17,7 +17,7 @@ export function bootstrapArticleModule(router: Router) {
     articleController.createArticle.bind(articleController),
   )
   router.patch(
-    `${prefix}:id`,
+    `${prefix}/:id`,
     articleController.updateArticle.bind(articleController),
   )
   router.delete(

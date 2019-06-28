@@ -1,6 +1,7 @@
 import * as Koa from 'koa'
 import { getRepository, Repository } from 'typeorm'
 import * as HTTPStatusCodes from 'http-status-codes'
+import { getTagById } from '../tag/tag.service'
 import { ArticleEntity } from './article.entity'
 import { marked } from './article.service'
 
@@ -11,7 +12,10 @@ class ArticleController {
   }
 
   async getArticles(ctx: Koa.Context) {
-    const articles = await this.repo.find()
+    const articles = await this.repo
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.tags', 'tags')
+      .getMany()
     ctx.body = { data: articles }
   }
 
@@ -28,11 +32,19 @@ class ArticleController {
 
   async createArticle(ctx: Koa.Context) {
     const { html, toc } = marked(ctx.request.body.content)
+    let tags = ctx.request.body.tags
+    tags = tags.replace(/\[|\]/g, '').split(',')
+    tags = await Promise.all(tags.map(getTagById))
+
+    delete ctx.request.body.tags
+
     const article = this.repo.create({
       ...ctx.request.body,
       html,
+      tags,
       toc: JSON.stringify(toc, null, 2),
     })
+
     await this.repo.save(article)
     ctx.body = { data: article }
   }

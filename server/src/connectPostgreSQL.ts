@@ -13,6 +13,6 @@ const connectionOps: ConnectionOptions = {
   synchronize: true,
 }
 
-export function connectPostgreSQL(): Promise<any> {
+export function connectPostgreSQL(): Promise<Connection> {
   return createConnection(connectionOps)
 }

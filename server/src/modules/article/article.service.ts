@@ -1,6 +1,6 @@
 import * as Marked from 'marked'
 import * as hljs from 'highlight.js'
-import { IToc } from './article.entity'
+import { IToc } from './article.interface'
 
 const renderer = new Marked.Renderer()
 

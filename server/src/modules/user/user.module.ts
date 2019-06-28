@@ -5,11 +5,16 @@ import userController from './user.controller'
 export function bootstrapUserModule(router: Router) {
   const prefix = '/user'
 
-  router.get(`${prefix}/`, userController.getUsers.bind(userController))
-  router.get(`${prefix}/:id`, userController.getUser.bind(userController))
-  router.post(`${prefix}/login`, userController.login.bind(userController))
-  router.post(
-    `${prefix}/register`,
-    userController.createUser.bind(userController),
-  )
+  // 获取所有用户
+  router.get(`${prefix}`, userController.getUsers)
+  // 获取指定用户信息
+  router.get(`${prefix}/:id`, userController.getUser)
+  // 登录
+  router.post(`${prefix}/login`, userController.login)
+  // 注册
+  router.post(`${prefix}/register`, userController.register)
+  // 修改用户信息
+  router.patch(`${prefix}/:id`, userController.updateUser)
+  // 删除用户
+  router.delete(`${prefix}/:id`, userController.deleteUser)
 }

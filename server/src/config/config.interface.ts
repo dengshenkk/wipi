@@ -12,4 +12,9 @@ export interface IConfig {
   router: {
     prefix: string
   }
+  token: {
+    secret: string
+    expires: number
+    unless: RegExp[]
+  }
 }
