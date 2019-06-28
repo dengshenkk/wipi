@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { ArticleEntity } from './../article/article.entity'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  JoinTable,
+} from 'typeorm'
+import { IArticle } from '../article/article.interface'
 
 @Entity()
 export class UserEntity {
@@ -13,6 +21,10 @@ export class UserEntity {
 
   @Column('simple-enum', { enum: ['admin', 'normal'], default: 'normal' })
   role: string
+
+  @OneToMany(type => ArticleEntity, (article: IArticle) => article.author)
+  @JoinTable()
+  articles: IArticle[]
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createAt: string

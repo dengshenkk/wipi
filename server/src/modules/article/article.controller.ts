@@ -69,7 +69,6 @@ class ArticleController {
     }
 
     await this.repo.remove(article) // 注意与 delete 的区别
-
     ctx.status = HTTPStatusCodes.NO_CONTENT
   }
 }

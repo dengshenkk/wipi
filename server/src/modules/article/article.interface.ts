@@ -1,4 +1,5 @@
 import { ITag } from '../tag/tag.interface'
+import { IUser } from '../user/user.interface'
 
 enum Status {
   draft = 'draft',
@@ -22,6 +23,7 @@ export interface IArticle {
   tags: ITag[] // 标签
   status: Status // 状态
   views: number // 阅读量
+  author: IUser
   publishAt: Date
   createAt: Date
   updateAt: Date

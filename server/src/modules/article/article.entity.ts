@@ -4,7 +4,10 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm'
+import { UserEntity } from '../user/user.entity'
+import { IUser } from '../user/user.interface'
 import { TagEntity } from '../tag/tag.entity'
 import { ITag } from '../tag/tag.interface'
 import { IToc } from './article.interface'
@@ -31,6 +34,12 @@ export class ArticleEntity {
 
   @Column('simple-array')
   toc: IToc[]
+
+  @ManyToOne(type => UserEntity, (user: IUser) => user.articles, {
+    cascade: true,
+  })
+  @JoinTable()
+  author: IUser
 
   @ManyToMany(type => TagEntity, (tag: ITag) => tag.articles, { cascade: true })
   @JoinTable()
