@@ -16,7 +16,7 @@ import { IUser, Roles } from './user.interface'
 class UserController {
   async login(ctx: Koa.Context) {
     let { name, password } = ctx.request.body
-    const user: UserEntity & IUser = await getUser({
+    const user = await getUser({
       name,
       password,
     })
@@ -25,6 +25,7 @@ class UserController {
       ctx.throw(HTTPStatusCodes.BAD_REQUEST)
     }
     const token = await createToken(user)
+    delete user.password
     ctx.body = { data: user, token }
   }
 

@@ -22,7 +22,9 @@ export class UserEntity {
   @Column('simple-enum', { enum: ['admin', 'normal'], default: 'normal' })
   role: string
 
-  @OneToMany(type => ArticleEntity, (article: IArticle) => article.author)
+  @OneToMany(type => ArticleEntity, (article: IArticle) => article.author, {
+    nullable: true,
+  })
   @JoinTable()
   articles: IArticle[]
 

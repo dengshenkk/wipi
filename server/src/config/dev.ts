@@ -9,7 +9,7 @@ const config: IConfig = {
     database: 'postgres',
   },
   app: {
-    port: 3000,
+    port: 4000,
   },
   router: {
     prefix: '/api/v1',

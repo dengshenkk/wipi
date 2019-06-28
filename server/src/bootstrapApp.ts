@@ -16,7 +16,7 @@ export function bootstrapApp(port: number) {
   bootstrapModules(app, router)
 
   // 错误日志
-  // app.on('error', console.error)
+  app.on('error', console.error)
 
   app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`)

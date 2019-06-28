@@ -15,10 +15,13 @@ const now = () => {
 }
 
 export const createToken = async (user: IUser) => {
-  await updateUser({
-    ...user,
-    lastLoginAt: now(),
-  })
+  await updateUser(
+    {
+      ...user,
+      lastLoginAt: now(),
+    },
+    true,
+  )
   const token = jwt.sign(
     {
       id: user.id,
@@ -63,10 +66,12 @@ export const getUsers = async () => {
   return users
 }
 
-export const getUser = async (user: object & IUser) => {
+export const getUser = async (user: IUser) => {
   const repo = getRepo()
-  user.password = encrypt(user.password)
-  const ret = await repo.findOne(user)
+  const ret = await repo.findOne({
+    name: user.name,
+    password: encrypt(user.password),
+  })
   return ret
 }
 
@@ -76,11 +81,14 @@ export const getUserById = async (id: string) => {
   return user
 }
 
-export const updateUser = async (user: IUser) => {
+export const updateUser = async (
+  user: IUser,
+  isCreateToken: boolean = false,
+) => {
   const repo = getRepo()
   const oldUser = await getUserById(user.id)
 
-  if (user.password) {
+  if (user.password && !isCreateToken) {
     user.password = encrypt(user.password)
   }
 
