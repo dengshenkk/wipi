@@ -1,19 +1,27 @@
 import React from "react";
-import { Form, Input, Button, Icon } from "antd";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch, AnyAction } from "redux";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+import { message, Form, Input, Button, Icon } from "antd";
 import { FormComponentProps } from "antd/lib/form/Form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { UserLayout } from "../layouts/UserLayout";
+import { IState } from "../store";
+import { login } from "../store/modules/user/user.reducer";
 
 function hasErrors(fieldsError: any) {
   return Object.keys(fieldsError).some((field: any) => fieldsError[field]);
 }
 
-interface IProps extends FormComponentProps {}
+interface IProps extends FormComponentProps {
+  loading: boolean;
+  login: Function;
+}
 
-const LoginForm = (props: IProps) => {
+const LoginForm = (props: IProps & RouteComponentProps) => {
   const { t } = useTranslation();
-  const { form } = props;
+  const { form, login, loading, history } = props;
   const { getFieldDecorator, getFieldsError } = form;
 
   const validateUsername = (rule: any, value: string, callback: Function) => {
@@ -36,7 +44,15 @@ const LoginForm = (props: IProps) => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        login(values)
+          .then(() => {
+            message.success("登录成功");
+
+            history.push({ pathname: "/" });
+          })
+          .catch(() => {
+            message.error("登录失败，请检查账号和密码");
+          });
       }
     });
   };
@@ -52,7 +68,7 @@ const LoginForm = (props: IProps) => {
         <h2>{t("login")}</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Item>
-            {getFieldDecorator("username", {
+            {getFieldDecorator("name", {
               rules: [{ validator: validateUsername }]
             })(
               <Input
@@ -82,6 +98,7 @@ const LoginForm = (props: IProps) => {
               htmlType="submit"
               disabled={hasErrors(getFieldsError())}
               style={{ width: "100%" }}
+              loading={loading}
             >
               {t("login")}
             </Button>
@@ -93,4 +110,19 @@ const LoginForm = (props: IProps) => {
   );
 };
 
-export const Login = Form.create({ name: "login" })(LoginForm);
+const mapStateToProps = (state: IState) => ({
+  loading: state.loading.loading
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+  bindActionCreators(
+    {
+      login
+    },
+    dispatch
+  );
+
+export const Login = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Form.create({ name: "login" })(withRouter(LoginForm)));
