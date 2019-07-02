@@ -5,12 +5,16 @@ import config from '../config'
 
 export const useTokenParser = () => {
   return async (ctx: Koa.Context, next: () => Promise<any>) => {
-    const token = ctx.request.header.token
+    const token = ctx.request.header.authorization
+
+    console.log('token', 1, token, ctx.request.headers.authorization)
 
     if (token) {
       let payload = jwtParser.decode(token.split(' ')[1], config.token.secret)
       ctx.request.body = ctx.request.body || {}
-      ctx.request.body.userInfoFromToken = payload
+      ctx.request.body.currentUser = payload
+
+      console.log('token', 2, payload)
     }
     // } else {
     //   ctx.throw(

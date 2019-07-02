@@ -30,14 +30,36 @@ class UserController {
   }
 
   async register(ctx: Koa.Context) {
-    let { name, password } = ctx.request.body // 新注册账户默认权限：普通用户
-    const user = await createUser({ name, password, role: Roles.normal })
-    ctx.body = { data: user }
+    let { name, password, role, currentUser } = ctx.request.body
+
+    if (currentUser) {
+      const can = await isAdmin(currentUser)
+
+      if (!can) {
+        // 非管理员分配权限
+        ctx.throw(HTTPStatusCodes.FORBIDDEN)
+      }
+    } else {
+      role = null
+    }
+
+    try {
+      const user = await createUser({
+        name,
+        password,
+        role: role || Roles.normal,
+      })
+      ctx.body = { data: user }
+    } catch (e) {
+      if (e.code == '23505') {
+        ctx.throw(HTTPStatusCodes.BAD_REQUEST, `${name} already exists`)
+      }
+    }
   }
 
   async getUser(ctx: Koa.Context) {
     const { id } = ctx.params
-    const currentUser = ctx.request.body.userInfoFromToken
+    const currentUser = ctx.request.body.currentUser
     const can = await isAdmin(currentUser)
 
     if (!can && id !== currentUser.id) {
@@ -55,7 +77,8 @@ class UserController {
   }
 
   async getUsers(ctx: Koa.Context) {
-    const can = await isAdmin(ctx.request.body.userInfoFromToken)
+    console.log(ctx.request.body.currentUser)
+    const can = await isAdmin(ctx.request.body.currentUser)
     if (can) {
       const users = await getUsers()
       ctx.body = { data: users }
@@ -67,7 +90,7 @@ class UserController {
   async updateUser(ctx: Koa.Context) {
     const id = ctx.param.id
     const newInfo = ctx.request.body
-    const currentUser = ctx.request.body.userInfoFromToken
+    const currentUser = ctx.request.body.currentUser
     const can = await isAdmin(currentUser)
 
     if (!can && id !== currentUser.id) {
@@ -81,7 +104,7 @@ class UserController {
 
   async deleteUser(ctx: Koa.Context) {
     const id = ctx.param.id
-    const currentUser = ctx.request.body.userInfoFromToken
+    const currentUser = ctx.request.body.currentUser
     const can = await isAdmin(currentUser)
 
     if (!can && id !== currentUser.id) {
