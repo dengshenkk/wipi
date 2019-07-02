@@ -1,12 +1,12 @@
 import React from "react";
-import { Table, Divider, Tag } from "antd";
+import { Button, Table, Divider, Tag } from "antd";
 
 const columns = [
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text: React.ReactNode) => <a href="javascript:;">{text}</a>
+    render: (text: React.ReactNode) => <Button type="link">{text}</Button>
   },
   {
     title: "Age",
@@ -45,9 +45,9 @@ const columns = [
     key: "action",
     render: (text: any, record: { name: React.ReactNode }) => (
       <span>
-        <a href="javascript:;">Invite {record.name}</a>
+        <Button type="link">Invite {record.name}</Button>
         <Divider type="vertical" />
-        <a href="javascript:;">Delete</a>
+        <Button type="link">Delete</Button>
       </span>
     )
   }

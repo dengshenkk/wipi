@@ -5,3 +5,6 @@ export const login = (user: object): Promise<any> =>
 
 export const register = (user: object): Promise<any> =>
   http({ method: "POST", url: "/user/register", data: user });
+
+export const fetchUsers = (): Promise<any> =>
+  http({ method: "GET", url: "/user" });

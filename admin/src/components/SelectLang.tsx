@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Avatar, Menu, Dropdown, Icon } from "antd";
+import { Avatar, Menu, Dropdown } from "antd";
 import classnames from "classnames";
 
 import AmericaLogo from "../assets/america.svg";

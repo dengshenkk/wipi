@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter, Link, RouteComponentProps } from "react-router-dom";
 import { message, Form, Input, Button, Icon } from "antd";
 import { FormComponentProps } from "antd/lib/form/Form";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { UserLayout } from "../layouts/UserLayout";
 import { IState } from "../store";
 import { login } from "../store/modules/user/user.reducer";
@@ -45,13 +44,13 @@ const LoginForm = (props: IProps & RouteComponentProps) => {
     props.form.validateFields((err, values) => {
       if (!err) {
         login(values)
-          .then(() => {
-            message.success("登录成功");
-
-            history.push({ pathname: "/" });
+          .then((res: { token: string }) => {
+            window.sessionStorage.setItem("token", res["token"]);
+            message.success(t("loginSuccessMsg"));
+            history.replace({ pathname: "/" });
           })
           .catch(() => {
-            message.error("登录失败，请检查账号和密码");
+            message.error(t("loginFailMsg"));
           });
       }
     });

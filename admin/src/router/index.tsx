@@ -3,17 +3,11 @@ import { Route, Switch } from "react-router-dom";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
 import { DashBoard } from "../pages/DashBoard";
+import { UserManager } from "../pages/UserManager";
 import { Articles } from "../pages/Articles";
 import { ArticleEditor } from "../pages/ArticleEditor";
 
 export const routes = [
-  {
-    path: "/",
-    icon: "global",
-    title: "dashBoard",
-    component: DashBoard
-  },
-
   {
     path: "/login",
     icon: "global",
@@ -26,6 +20,20 @@ export const routes = [
     icon: "global",
     title: "register",
     component: Register
+  },
+
+  {
+    path: "/",
+    icon: "global",
+    title: "dashBoard",
+    component: DashBoard
+  },
+
+  {
+    path: "/users",
+    icon: "global",
+    title: "users",
+    component: UserManager
   },
 
   {
