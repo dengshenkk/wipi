@@ -44,7 +44,7 @@ const LayoutModeCheckIcon: React.FC<LayoutModeCheckIconProps> = (
 
 export const LayoutSetting: React.FC<Props> = (props: Props) => {
   const { t } = useTranslation();
-  const [visible, toggleVisible] = useState(true);
+  const [visible, toggleVisible] = useState(false);
   const { layoutMode, onLayoutModeChange, theme, onThemeChange } = props;
   const width = 300;
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Layout } from "antd";
 import classnames from "classnames";
+import { Logo } from "../components/Logo";
 import { SelectLang } from "../components/SelectLang";
 import { UserInfo } from "../components/UserInfo";
 import { DefaultFooter } from "../components/DefaultFooter";
@@ -21,12 +22,13 @@ export const TopLayout: React.FC<Props> = props => {
     <Layout className="layout layout--horizontal">
       <Header
         className={classnames("layout-heade", "layout-header--top", {
-          "layout-header--light": theme === "light"
+          "layout-header--light": theme === "light",
+          "layout-header--dark": theme === "dark"
         })}
       >
         <Row>
           <Col xs={20} sm={16}>
-            <div className="logo" />
+            <Logo style={{ boxShaow: "box-shadow: 1px 1px 0 0 #e8e8e8" }} />
             <NavMenu layoutMode={layoutMode} theme={theme} />
           </Col>
 

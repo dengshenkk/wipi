@@ -11,12 +11,15 @@
 
   .logo {
     display: inline-flex;
-    width: 120px;
     float: left;
   }
 
   .ant-menu-horizontal {
-    line-height: 64px;
+    line-height: 62px;
+
+    &.ant-menu-dark {
+      line-height: 64px;
+    }
   }
 }
 
@@ -25,7 +28,7 @@
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .ant-menu {
-    border-bottom: 0 !important;
+    border-bottom: none !important;
   }
 }
 
@@ -33,6 +36,12 @@
   padding-top: 64px;
   height: 100%;
   overflow: auto;
+
+  .page > header > div,
+  .page main {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
   .page > header > div {
     padding: 16px 24px;

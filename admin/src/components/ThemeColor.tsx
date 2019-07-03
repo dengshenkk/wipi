@@ -49,7 +49,7 @@ export const ThemeColor: React.FC = () => {
     if (color && color !== currentColor) {
       lessModifyColorVars(color);
     }
-  }, []);
+  }, [currentColor, lessModifyColorVars]);
 
   return (
     <>

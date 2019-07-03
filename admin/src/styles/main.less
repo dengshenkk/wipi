@@ -23,7 +23,6 @@ section.layout {
   background: #fff;
 
   > div {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 16px 24px;
   }
@@ -31,7 +30,6 @@ section.layout {
 
 .page main {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -48,9 +46,37 @@ section.layout {
 }
 
 .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
+  position: relative;
+  height: 64px;
+  padding-left: 24px;
+  overflow: hidden;
+  line-height: 64px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: inherit;
+
+  img {
+    display: inline-block;
+    width: auto;
+    height: 32px;
+    vertical-align: middle;
+  }
+
+  h1 {
+    display: inline-block;
+    margin: 0 0 0 12px;
+    color: inherit;
+    font-weight: 600;
+    font-size: 20px;
+    vertical-align: middle;
+    transition: all ease 0.2s;
+  }
+}
+
+.layout-header--dark {
+  color: #fff;
 }
 
 .setting-drawer-handler {

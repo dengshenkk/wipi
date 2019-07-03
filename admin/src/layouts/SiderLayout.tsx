@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col, Layout, Icon } from "antd";
 import classnames from "classnames";
+import { Logo } from "../components/Logo";
 import { SelectLang } from "../components/SelectLang";
 import { UserInfo } from "../components/UserInfo";
 import { DefaultFooter } from "../components/DefaultFooter";
@@ -17,6 +18,7 @@ type Props = {
 export const SiderLayout: React.FC<Props> = props => {
   const { layoutMode, theme } = props;
   const [collapsed, toggleCollapse] = useState(false);
+  const [isXs, toggleXs] = useState(false);
 
   return (
     <Layout className={classnames("layout", "layout-vertical")}>
@@ -28,13 +30,14 @@ export const SiderLayout: React.FC<Props> = props => {
         breakpoint={"xs"}
         onBreakpoint={isXs => {
           toggleCollapse(isXs);
+          toggleXs(isXs);
         }}
         trigger={null}
         collapsible
-        collapsedWidth={0}
+        collapsedWidth={isXs ? 0 : 80}
         collapsed={collapsed}
       >
-        <div className="logo" />
+        <Logo h1Style={{ marginLeft: collapsed ? 24 : 12 }} />
         <NavMenu layoutMode={layoutMode} theme={theme} />
       </Sider>
       <Layout className={classnames("layout-content")}>
