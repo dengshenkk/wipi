@@ -8,6 +8,13 @@ export default {
   normal: "普通用户",
   admin: "管理员",
 
+  // 路由菜单
+  dashBoard: "工作台",
+  userManager: "用户管理",
+  articleManager: "文章管理",
+  articleList: "文章列表",
+  createArticle: "新建文章",
+
   // 登录 & 注册
   login: "登录",
   loginSuccessMsg: "登录成功",
@@ -36,5 +43,10 @@ export default {
   lastLoginAt: "最后登录时间",
   actions: "操作",
   areYouSure: "确定删除？",
-  createUser: "创建新用户"
+  createUser: "创建新用户",
+  createSuccessMsg: "创建新用户 成功!",
+  createFailMsg: "创建新用户 失败!",
+  updateUser: "更新用户信息",
+  updateSuccessMsg: "更新用户信息 成功!",
+  updateFailMsg: "更新用户信息 失败!"
 };

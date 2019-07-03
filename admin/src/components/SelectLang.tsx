@@ -46,7 +46,15 @@ export const SelectLang = () => {
 
   return (
     <Dropdown overlay={menu}>
-      <Avatar src={currentLanguage.logo} />
+      <div
+        style={{
+          display: "inline-block",
+          padding: "0 12px",
+          cursor: "pointer"
+        }}
+      >
+        <Avatar src={currentLanguage.logo} size={"small"} />
+      </div>
     </Dropdown>
   );
 };

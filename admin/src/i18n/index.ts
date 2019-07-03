@@ -17,6 +17,7 @@ i18n
       }
     },
     fallbackLng: "zhCN",
+    lng: "zhCN",
     debug: true,
     ns: ["translations"],
     defaultNS: "translations",

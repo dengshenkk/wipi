@@ -8,7 +8,7 @@ export interface IUser {
 }
 
 export interface IUserState {
-  user?: IUser;
+  currentUser?: IUser;
   users?: IUser[];
   count: number;
 }

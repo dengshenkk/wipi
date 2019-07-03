@@ -8,6 +8,13 @@ export default {
   normal: "Normal User",
   admin: "Admin User",
 
+  // 路由菜单
+  dashBoard: "DashBoard",
+  userManager: "User Manger",
+  articleManager: "Article Manager",
+  articleList: "Article List",
+  createArticle: "Create Article",
+
   // 登录 & 注册
   login: "Login",
   loginSuccessMsg: "Login Successfully!",
@@ -36,5 +43,10 @@ export default {
   lastLoginAt: "Last Login Time",
   actions: "Actions",
   areYouSure: "Are you sure?",
-  createUser: "Create User"
+  createUser: "Create User",
+  createSuccessMsg: "Create user Successfully!",
+  createFailMsg: "Create user failed!",
+  updateUser: "Update User Info",
+  updateSuccessMsg: "Update user Successfully!",
+  updateFailMsg: "Update user failed!"
 };

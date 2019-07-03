@@ -2,7 +2,7 @@ import * as React from "react";
 import classnames from "classnames";
 import { DefaultFooter } from "../components/DefaultFooter";
 import { SelectLang } from "../components/SelectLang";
-import "./UserLayout.scss";
+import "./UserLayout.less";
 
 export const UserLayout: React.FC = props => {
   return (

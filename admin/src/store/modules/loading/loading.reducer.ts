@@ -6,9 +6,6 @@ const initialState: ILoading = {
   loading: false
 };
 
-export const startLoading = () => ({ type: START_LOADING });
-export const stopLoading = () => ({ type: STOP_LOADING });
-
 export const loadingReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case START_LOADING:

@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
-import { Button, Modal } from "antd";
 import { useTranslation } from "react-i18next";
 import { BasicLayout } from "../../layouts/BasicLayout";
 import { IState } from "../../store";
-import { fetchUsers } from "../../store/modules/user/user.reducer";
+import {
+  fetchUsers,
+  updateUser,
+  deleteUser
+} from "../../store/modules/user/user.action";
 import { IUser } from "../../store/modules/user/user.interface";
 import { CreateUser } from "./CreateUser";
 import { UserTable } from "./UserTable";
@@ -17,7 +20,7 @@ const mapStateToProps = (state: IState) => ({
 });
 
 const mapDispatchToProps = (dispath: Dispatch<AnyAction>) =>
-  bindActionCreators({ fetchUsers }, dispath);
+  bindActionCreators({ fetchUsers, updateUser, deleteUser }, dispath);
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> & {
@@ -28,7 +31,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 const UsersComponent: React.FC<Props> = props => {
   const { t } = useTranslation();
-  const { fetchUsers, users, count } = props;
+  const { users, count, loading, fetchUsers, updateUser, deleteUser } = props;
 
   useEffect(() => {
     console.log("组件装载");
@@ -40,10 +43,16 @@ const UsersComponent: React.FC<Props> = props => {
   }, [fetchUsers]);
 
   return (
-    <BasicLayout>
+    <BasicLayout title={t("userManager")}>
       <div style={{ background: "#fff", padding: 15 }}>
-        <CreateUser />
-        <UserTable users={users} count={count} />
+        <CreateUser onSuccess={() => fetchUsers()} />
+        <UserTable
+          loading={loading}
+          users={users}
+          count={count}
+          updateUser={updateUser}
+          deleteUser={deleteUser}
+        />
       </div>
     </BasicLayout>
   );

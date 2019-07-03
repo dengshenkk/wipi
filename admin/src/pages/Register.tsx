@@ -1,12 +1,35 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch, AnyAction } from "redux";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+import { Form, Button, Modal, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { UserLayout } from "../layouts/UserLayout";
-import { RegisterForm } from "../components/RegisterForm";
+import { UserInfoForm } from "../components/UserInfoForm";
+import { IState } from "../store";
+import { register } from "../store/modules/user/user.action";
 
-export const Register = () => {
+type StateProps = {
+  loading: boolean;
+};
+
+type DispatchProps = {
+  register: Function;
+};
+
+type Props = StateProps & DispatchProps & RouteComponentProps;
+
+const mapStateToProps = (state: IState): StateProps => ({
+  loading: state.loading.loading
+});
+
+const mapDispatchToProps = (dispath: Dispatch<AnyAction>): DispatchProps =>
+  bindActionCreators({ register }, dispath);
+
+export const BaseComponent = (props: Props) => {
   const { t } = useTranslation();
+  const { loading, register, history } = props;
 
   return (
     <UserLayout>
@@ -17,10 +40,10 @@ export const Register = () => {
         }}
       >
         <h2>{t("register")}</h2>
-        <RegisterForm
-          shouldJumpToLogin={true}
-          shouldShowRoleSelect={false}
-          renderFooter={({ loading, hasErrors, getFieldsError }) => (
+        <UserInfoForm
+          showUserNameField
+          showPasswordField
+          renderFooter={({ hasErrors, getFieldsError }) => (
             <Form.Item>
               <Button
                 type="primary"
@@ -34,8 +57,30 @@ export const Register = () => {
               Or <Link to="/login">{t("login")}</Link>
             </Form.Item>
           )}
+          onSubmit={(values: any) => {
+            register(values)
+              .then(() => {
+                Modal.confirm({
+                  title: t("registerSuccessMsg"),
+                  content: t("registerSuccessHelpMsg"),
+                  onOk() {
+                    history.replace({ pathname: "/login" });
+                  },
+                  okText: t("confirm"),
+                  cancelText: t("cancel")
+                });
+              })
+              .catch(() => {
+                message.error(t("registerFailMsg"));
+              });
+          }}
         />
       </div>
     </UserLayout>
   );
 };
+
+export const Register = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(BaseComponent));

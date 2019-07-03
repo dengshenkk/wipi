@@ -1,11 +1,36 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
 import { useTranslation } from "react-i18next";
-import { RegisterForm } from "../../components/RegisterForm";
+import { UserInfoForm } from "../../components/UserInfoForm";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch, AnyAction } from "redux";
+import { Button, Modal, message } from "antd";
+import { IState } from "../../store";
+import { register } from "../../store/modules/user/user.action";
 
-export const CreateUser: React.FC<{}> = () => {
+type StateProps = {
+  loading: boolean;
+};
+
+type DispatchProps = {
+  register: Function;
+};
+
+type Props = StateProps &
+  DispatchProps & {
+    onSuccess: Function;
+  };
+
+const mapStateToProps = (state: IState): StateProps => ({
+  loading: state.loading.loading
+});
+
+const mapDispatchToProps = (dispath: Dispatch<AnyAction>): DispatchProps =>
+  bindActionCreators({ register }, dispath);
+
+const BaseComponent: React.FC<Props> = (props: Props) => {
   const { t } = useTranslation();
   const [visible, toggleVisible] = useState(false);
+  const { loading, register, onSuccess } = props;
 
   return (
     <div style={{ margin: "1em 0" }}>
@@ -18,12 +43,14 @@ export const CreateUser: React.FC<{}> = () => {
         footer={null}
         onCancel={() => toggleVisible(false)}
       >
-        <RegisterForm
-          shouldJumpToLogin={false}
-          shouldShowRoleSelect={true}
-          renderFooter={({ loading, hasErrors, getFieldsError }) => (
+        <UserInfoForm
+          showUserNameField
+          showPasswordField
+          showUserRoleField
+          renderFooter={({ hasErrors, getFieldsError }) => (
             <div style={{ textAlign: "right" }}>
               <Button
+                htmlType="reset"
                 style={{ marginRight: 8 }}
                 onClick={() => toggleVisible(false)}
               >
@@ -39,9 +66,24 @@ export const CreateUser: React.FC<{}> = () => {
               </Button>
             </div>
           )}
-          onSubmited={() => toggleVisible(false)}
+          onSubmit={(values: any) => {
+            register(values)
+              .then(() => {
+                message.success(t("createSuccessMsg"));
+                toggleVisible(false);
+                onSuccess();
+              })
+              .catch(() => {
+                message.error(t("createFailMsg"));
+              });
+          }}
         />
       </Modal>
     </div>
   );
 };
+
+export const CreateUser = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BaseComponent);

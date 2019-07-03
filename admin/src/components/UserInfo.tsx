@@ -2,9 +2,18 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { Menu, Dropdown, Avatar } from "antd";
+import { connect } from "react-redux";
+import { IState } from "../store";
 
-export const UserInfo = () => {
+const mapStateToProps = (state: IState) => ({
+  currentUser: state.user.currentUser
+});
+
+type Props = ReturnType<typeof mapStateToProps>;
+
+const User = (props: Props) => {
   const { t } = useTranslation();
+  const { currentUser } = props;
 
   const menu = () => {
     return (
@@ -22,7 +31,25 @@ export const UserInfo = () => {
 
   return (
     <Dropdown overlay={menu}>
-      <Avatar style={{ backgroundColor: "#87d068" }} icon="user" />
+      <div
+        style={{
+          display: "inline-block",
+          padding: "0 12px",
+          cursor: "pointer"
+        }}
+      >
+        <Avatar
+          style={{ backgroundColor: "#87d068" }}
+          size={"small"}
+          icon="user"
+        />
+        {currentUser ? <span>{currentUser.name}</span> : null}
+      </div>
     </Dropdown>
   );
 };
+
+export const UserInfo = connect(
+  mapStateToProps,
+  null
+)(User);

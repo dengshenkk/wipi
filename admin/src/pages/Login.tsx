@@ -7,7 +7,7 @@ import { FormComponentProps } from "antd/lib/form/Form";
 import { useTranslation } from "react-i18next";
 import { UserLayout } from "../layouts/UserLayout";
 import { IState } from "../store";
-import { login } from "../store/modules/user/user.reducer";
+import { login } from "../store/modules/user/user.action";
 
 function hasErrors(fieldsError: any) {
   return Object.keys(fieldsError).some((field: any) => fieldsError[field]);
