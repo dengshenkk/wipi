@@ -88,7 +88,7 @@ class UserController {
   }
 
   async updateUser(ctx: Koa.Context) {
-    const id = ctx.param.id
+    const id = ctx.params.id
     const newInfo = ctx.request.body
     const currentUser = ctx.request.body.currentUser
     const can = await isAdmin(currentUser)
@@ -103,8 +103,9 @@ class UserController {
   }
 
   async deleteUser(ctx: Koa.Context) {
-    const id = ctx.param.id
+    const id = ctx.params.id
     const currentUser = ctx.request.body.currentUser
+
     const can = await isAdmin(currentUser)
 
     if (!can && id !== currentUser.id) {
