@@ -7,6 +7,7 @@ import { Ownspace } from "../pages/Ownspace";
 import { UserManager } from "../pages/UserManager";
 import { Articles } from "../pages/Articles";
 import { ArticleEditor } from "../pages/ArticleEditor";
+import { TagManager } from "../pages/TagManager";
 
 export interface IRoute {
   path?: string;
@@ -45,7 +46,7 @@ export const routes: IRoute[] = [
 
   {
     path: "/users",
-    icon: "user",
+    icon: "team",
     title: "userManager",
     component: UserManager
   },
@@ -64,9 +65,16 @@ export const routes: IRoute[] = [
 
       {
         path: "/article/new",
-        icon: "global",
+        icon: "form",
         title: "createArticle",
         component: ArticleEditor
+      },
+
+      {
+        path: "/article/tag",
+        icon: "tag",
+        title: "tagManager",
+        component: TagManager
       }
     ]
   }
@@ -78,7 +86,8 @@ export const breadcrumbNameMap: { [key: string]: string } = {
   "/users": "userManager",
   "/article": "articleManager",
   "/article/list": "articleList",
-  "/article/new": "createArticle"
+  "/article/new": "createArticle",
+  "/article/tag": "tagManager"
 };
 
 export const Router: React.FC = () => {

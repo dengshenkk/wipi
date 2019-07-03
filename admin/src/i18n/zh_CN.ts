@@ -1,6 +1,7 @@
 export default {
   // 通用
   create: "新建",
+  submit: "提交",
   edit: "编辑",
   delete: "删除",
   confirm: "确认",
@@ -14,6 +15,7 @@ export default {
   articleManager: "文章管理",
   articleList: "文章列表",
   createArticle: "新建文章",
+  tagManager: "标签管理",
 
   // 页面设置
   themeColor: "主题色",
@@ -57,5 +59,30 @@ export default {
   createFailMsg: "创建新用户 失败!",
   updateUser: "更新用户信息",
   updateSuccessMsg: "更新用户信息 成功!",
-  updateFailMsg: "更新用户信息 失败!"
+  updateFailMsg: "更新用户信息 失败!",
+
+  // 标签管理
+  tagName: "标签名",
+  tagValue: "标签值",
+  createTag: "新建标签",
+  createTagSuccessMsg: "创建标签成功!",
+  createTagFailMsg: "创建标签失败!",
+  updateTag: "更新标签",
+  updateTagSuccessMsg: "更新标签成功!",
+  updateTagFailMsg: "更新标签失败!",
+
+  // 文章管理
+  articleEditor: "文章编辑",
+  articleTitle: "文章标题",
+  articleSummary: "文章摘要",
+  articleContent: "文章内容",
+  articleCover: "文章封面",
+  articleTags: "文章标签",
+  articleStatus: "文章状态",
+  draft: "草稿",
+  publish: "发布",
+  createArticleSuccessMsg: "新建文章成功",
+  createArticleFailMsg: "新建文章失败!",
+  updateArticleSuccessMsg: "更新文章成功",
+  updateArticleFailMsg: "更新文章失败!"
 };

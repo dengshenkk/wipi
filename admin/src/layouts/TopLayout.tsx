@@ -28,7 +28,12 @@ export const TopLayout: React.FC<Props> = props => {
       >
         <Row>
           <Col xs={20} sm={16}>
-            <Logo style={{ boxShaow: "box-shadow: 1px 1px 0 0 #e8e8e8" }} />
+            <Logo
+              style={{
+                boxShaow: "box-shadow: 1px 1px 0 0 #e8e8e8",
+                marginRight: 24
+              }}
+            />
             <NavMenu layoutMode={layoutMode} theme={theme} />
           </Col>
 

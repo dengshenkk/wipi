@@ -1,6 +1,7 @@
 export default {
   // 通用
   create: "create",
+  submit: "submit",
   edit: "edit",
   delete: "delete",
   confirm: "OK",
@@ -14,6 +15,7 @@ export default {
   articleManager: "Article Manager",
   articleList: "Article List",
   createArticle: "Create Article",
+  tagManager: "Tag Manager",
 
   // 页面设置
   themeColor: "Theme Color",
@@ -57,5 +59,30 @@ export default {
   createFailMsg: "Create user failed!",
   updateUser: "Update User Info",
   updateSuccessMsg: "Update user Successfully!",
-  updateFailMsg: "Update user failed!"
+  updateFailMsg: "Update user failed!",
+
+  // 标签管理
+  tagName: "Name",
+  tagValue: "Value",
+  createTag: "Create Tag",
+  createTagSuccessMsg: "Create tag successfully!",
+  createTagFailMsg: "Create tag failed!",
+  updateTag: "Update Tag",
+  updateTagSuccessMsg: "Update tag successfully!",
+  updateTagFailMsg: "Update tag failed!",
+
+  // 文章管理
+  articleEditor: "Article Editor",
+  articleTitle: "Article Title",
+  articleSummary: "Article Summary",
+  articleContent: "Article Content",
+  articleCover: "Article Cover",
+  articleTags: "Article Tags",
+  articleStatus: "Article Status",
+  draft: "draft",
+  publish: "publish",
+  createArticleSuccessMsg: "Create Article successfully",
+  createArticleFailMsg: "Create Article failed!",
+  updateArticleSuccessMsg: "Update Article successfully",
+  updateArticleFailMsg: "Update Article failed!"
 };

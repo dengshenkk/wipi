@@ -69,7 +69,7 @@ const BaseComponent: React.FC<Props & FormComponentProps> = (
     props.form.validateFields((err, values) => {
       if (!err) {
         onSubmit(values);
-        resetFields();
+        // resetFields();
       }
     });
   };

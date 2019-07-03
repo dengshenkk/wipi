@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Icon, Upload, Modal } from "antd";
 import { UploadFile } from "antd/es/upload/interface";
 
@@ -31,9 +32,11 @@ const uploadButton = (
 );
 
 export const CoverUpload: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div style={{ paddingBottom: 20 }}>
-      <h3>Cover</h3>
+      <h3>{t("articleCover")}</h3>
       <Upload
         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
