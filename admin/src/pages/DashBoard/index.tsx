@@ -1,6 +1,5 @@
 import React from "react";
 import { Statistic, Row, Icon } from "antd";
-import { BasicLayout } from "../../layouts/BasicLayout";
 import { CardContainer } from "./CardContainer";
 import { LineChart } from "./LineChart";
 import { AreaChart } from "./AreaChart";
@@ -8,7 +7,7 @@ import { ProgressChart } from "./ProgressChart";
 
 export const DashBoard: React.FC = () => {
   return (
-    <BasicLayout>
+    <>
       <Row gutter={16}>
         <CardContainer span={12}>
           <Statistic
@@ -44,6 +43,6 @@ export const DashBoard: React.FC = () => {
           <ProgressChart />
         </CardContainer>
       </Row>
-    </BasicLayout>
+    </>
   );
 };

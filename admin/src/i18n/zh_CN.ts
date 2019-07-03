@@ -15,6 +15,15 @@ export default {
   articleList: "文章列表",
   createArticle: "新建文章",
 
+  // 页面设置
+  themeColor: "主题色",
+  compilingTheme: "正在编译......",
+  compileThemeFailed: "编译主题失败!",
+  layoutMode: "布局模式",
+  navMenuTheme: "导航菜单主题",
+  navMenuThemeLight: "亮色",
+  navMenuThemeDark: "暗色",
+
   // 登录 & 注册
   login: "登录",
   loginSuccessMsg: "登录成功",

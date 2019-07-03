@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
 import { useTranslation } from "react-i18next";
-import { BasicLayout } from "../../layouts/BasicLayout";
 import { IState } from "../../store";
 import {
   fetchUsers,
@@ -10,6 +9,7 @@ import {
   deleteUser
 } from "../../store/modules/user/user.action";
 import { IUser } from "../../store/modules/user/user.interface";
+import { PageHeader } from "../../components/PageHeader";
 import { CreateUser } from "./CreateUser";
 import { UserTable } from "./UserTable";
 
@@ -43,7 +43,8 @@ const UsersComponent: React.FC<Props> = props => {
   }, [fetchUsers]);
 
   return (
-    <BasicLayout title={t("userManager")}>
+    <>
+      <PageHeader title={t("userManager")} />
       <div style={{ background: "#fff", padding: 15 }}>
         <CreateUser onSuccess={() => fetchUsers()} />
         <UserTable
@@ -54,7 +55,7 @@ const UsersComponent: React.FC<Props> = props => {
           deleteUser={deleteUser}
         />
       </div>
-    </BasicLayout>
+    </>
   );
 };
 

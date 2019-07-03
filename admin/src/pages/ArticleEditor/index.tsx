@@ -1,6 +1,5 @@
 import React from "react";
 import { Row, Col, Input, Icon, Button, Drawer } from "antd";
-import { BasicLayout } from "../../layouts/BasicLayout";
 import { MDEditor } from "./MDEditor";
 import { ArticleStatus } from "./ArticleStatus";
 import { CoverUpload } from "./CoverUpload";
@@ -10,7 +9,7 @@ const { TextArea } = Input;
 
 export const ArticleEditor: React.FC = () => {
   return (
-    <BasicLayout>
+    <>
       <Row gutter={16}>
         <Col span={24}>
           <Input placeholder="Basic usage" />
@@ -49,6 +48,6 @@ export const ArticleEditor: React.FC = () => {
           <Button type="primary">Submit</Button>
         </div>
       </Drawer>
-    </BasicLayout>
+    </>
   );
 };

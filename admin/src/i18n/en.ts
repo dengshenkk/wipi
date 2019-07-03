@@ -15,6 +15,15 @@ export default {
   articleList: "Article List",
   createArticle: "Create Article",
 
+  // 页面设置
+  themeColor: "Theme Color",
+  compilingTheme: "Compiling theme...",
+  compileThemeFailed: "Failed to compile theme!",
+  layoutMode: "Layout Mode",
+  navMenuTheme: "NavMenu Theme",
+  navMenuThemeLight: "Light",
+  navMenuThemeDark: "Dark",
+
   // 登录 & 注册
   login: "Login",
   loginSuccessMsg: "Login Successfully!",

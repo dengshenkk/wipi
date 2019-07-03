@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
 import { DashBoard } from "../pages/DashBoard";
+import { Ownspace } from "../pages/Ownspace";
 import { UserManager } from "../pages/UserManager";
 import { Articles } from "../pages/Articles";
 import { ArticleEditor } from "../pages/ArticleEditor";
@@ -36,6 +37,13 @@ export const routes: IRoute[] = [
   },
 
   {
+    path: "/ownspace",
+    icon: "dashboard",
+    title: "ownspace",
+    component: Ownspace
+  },
+
+  {
     path: "/users",
     icon: "user",
     title: "userManager",
@@ -66,6 +74,7 @@ export const routes: IRoute[] = [
 
 export const breadcrumbNameMap: { [key: string]: string } = {
   "/": "dashBoard",
+  "/ownspace": "ownspace",
   "/users": "userManager",
   "/article": "articleManager",
   "/article/list": "articleList",

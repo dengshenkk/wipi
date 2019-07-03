@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import { Breadcrumb, Typography } from "antd";
 import { useTranslation } from "react-i18next";
-import { breadcrumbNameMap } from "../../router";
+import { breadcrumbNameMap } from "../router";
 const { Paragraph } = Typography;
 
 export type Props = {
@@ -10,6 +11,27 @@ export type Props = {
   subTitle?: string;
   renderHeaderChildren?: () => React.ReactElement;
 };
+
+function usePortal(node: any) {
+  const rootElement = React.useRef(document.createElement("header"));
+
+  useEffect(() => {
+    const parentElement = document.querySelector(node);
+    const childNodes = parentElement.children;
+
+    if (childNodes && childNodes.length) {
+      parentElement.insertBefore(rootElement.current, childNodes[0]);
+    } else {
+      parentElement.appendChild(rootElement.current);
+    }
+
+    return () => {
+      rootElement.current.remove();
+    };
+  }, []);
+
+  return rootElement.current;
+}
 
 const BaseComponent: React.FC<Props & RouteComponentProps> = props => {
   const { t } = useTranslation();
@@ -31,15 +53,16 @@ const BaseComponent: React.FC<Props & RouteComponentProps> = props => {
     </Breadcrumb.Item>
   ].concat(extraBreadcrumbItems);
 
-  return (
-    <header style={{ background: "#fff" }}>
-      <div>
-        <Breadcrumb style={{ marginBottom: 12 }}>{breadcrumbItems}</Breadcrumb>
-        {title ? <h3>{title}</h3> : null}
-        {subTitle ? <Paragraph>{subTitle}</Paragraph> : null}
-        {(renderHeaderChildren && renderHeaderChildren()) || null}
-      </div>
-    </header>
+  const target = usePortal(".page");
+
+  return createPortal(
+    <div>
+      <Breadcrumb style={{ marginBottom: 12 }}>{breadcrumbItems}</Breadcrumb>
+      {title ? <h3>{title}</h3> : null}
+      {subTitle ? <Paragraph>{subTitle}</Paragraph> : null}
+      {(renderHeaderChildren && renderHeaderChildren()) || null}
+    </div>,
+    target
   );
 };
 

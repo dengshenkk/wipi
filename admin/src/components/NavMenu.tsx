@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, withRouter, RouteComponentProps } from "react-router-dom";
 import { Menu, Icon } from "antd";
 import { useTranslation } from "react-i18next";
-import { routes } from "../../router";
+import { routes } from "../router";
 
 type Props = {
   layoutMode: string;
@@ -17,7 +17,7 @@ const BaseComponent: React.FC<Props & RouteComponentProps> = props => {
   return (
     <Menu
       theme={theme}
-      mode={layoutMode === "horizontal" ? "horizontal" : "inline"}
+      mode={layoutMode !== "sider" ? "horizontal" : "inline"}
       defaultSelectedKeys={[pathname]}
     >
       {routes.slice(2).map(route => {
