@@ -34,9 +34,7 @@ export const ArticleTable: React.FC<Props> = props => {
       key: "tags",
       render: (tags: ITag[] = []) => (
         <>
-          {tags.map(tag => (
-            <Tag key={tag.id}>{tag.label}</Tag>
-          ))}
+          {tags.map(tag => (tag ? <Tag key={tag.id}>{tag.label}</Tag> : null))}
         </>
       )
     },
