@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Provider } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { LayoutSetting } from "./components/LayoutSetting";
 import { SiderLayout } from "./layouts/SiderLayout";
 import { TopLayout } from "./layouts/TopLayout";
 import { Router } from "./router";
-import { configStore } from "./store";
 
 declare let less: any;
-
-const store = configStore();
 
 const App: React.FC<RouteComponentProps> = props => {
   const { history } = props;
@@ -49,7 +45,7 @@ const App: React.FC<RouteComponentProps> = props => {
   }, []);
 
   return (
-    <Provider store={store}>
+    <>
       {isLoginOrRegister ? (
         <Router />
       ) : (
@@ -71,7 +67,7 @@ const App: React.FC<RouteComponentProps> = props => {
           )}
         </>
       )}
-    </Provider>
+    </>
   );
 };
 

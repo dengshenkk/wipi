@@ -11,21 +11,23 @@ import { tagReducer } from "./modules/tag/tag.reducer";
 import { IArticleState } from "./modules/article/article.interface";
 import { articleReducer } from "./modules/article/article.reducer";
 
+import { IServerStatusState } from "./modules/serverStatus/serverStatus.interface";
+import { serverStatusReducer } from "./modules/serverStatus/serverStatus.reducer";
+
 export interface IState {
   loading: ILoading;
   user: IUserState;
   tag: ITagState;
   article: IArticleState;
+  serverStatus: IServerStatusState;
 }
 
-export const configStore = () => {
-  const rootReducer = combineReducers({
-    loading: loadingReducer,
-    user: userReducer,
-    tag: tagReducer,
-    article: articleReducer
-  });
+const rootReducer = combineReducers({
+  loading: loadingReducer,
+  user: userReducer,
+  tag: tagReducer,
+  article: articleReducer,
+  serverStatus: serverStatusReducer
+});
 
-  let store = createStore(rootReducer, applyMiddleware(thunk));
-  return store;
-};
+export const store = createStore(rootReducer, applyMiddleware(thunk));
