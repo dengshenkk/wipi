@@ -5,6 +5,7 @@ import * as moment from 'moment'
 import { getTagById } from '../tag/tag.service'
 import { ArticleEntity } from './article.entity'
 import { marked } from './article.service'
+import { isAdmin } from '../user/user.service'
 
 class ArticleController {
   get repo(): Repository<ArticleEntity> {
@@ -56,6 +57,13 @@ class ArticleController {
 
   async updateArticle(ctx: Koa.Context) {
     const article = await this.repo.findOne(ctx.params.id)
+    const author = ctx.request.body
+    const currentUser = ctx.request.body.currentUser
+    const can = await isAdmin(currentUser)
+
+    if (!can && author.id !== currentUser.id) {
+      ctx.throw(HTTPStatusCodes.FORBIDDEN)
+    }
 
     if (!article) {
       ctx.throw(HTTPStatusCodes.NOT_FOUND)
@@ -78,10 +86,22 @@ class ArticleController {
   }
 
   async deleteArticle(ctx: Koa.Context) {
-    const article = await this.repo.findOne(ctx.params.id)
+    const article = await this.repo
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.author', 'author')
+      .where('article.id=:id')
+      .setParameter('id', ctx.params.id)
+      .getOne()
 
     if (!article) {
       ctx.throw(HTTPStatusCodes.NOT_FOUND)
+    }
+
+    const currentUser = ctx.request.body.currentUser
+    const can = await isAdmin(currentUser)
+
+    if (!can && article.author.id !== currentUser.id) {
+      ctx.throw(HTTPStatusCodes.FORBIDDEN)
     }
 
     await this.repo.remove(article) // 注意与 delete 的区别
