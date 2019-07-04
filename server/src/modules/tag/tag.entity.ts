@@ -7,7 +7,7 @@ export class TagEntity {
   id: string
 
   @Column()
-  name: string
+  label: string
 
   @Column()
   value: string

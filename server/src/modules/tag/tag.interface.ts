@@ -1,6 +1,6 @@
 export interface ITag {
   id: string
-  name: string
+  label: string
   value: string
   articles: any[]
 }
