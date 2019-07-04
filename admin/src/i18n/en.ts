@@ -12,7 +12,7 @@ export default {
   updateAt: "Update Time",
   publishAt: "Publish Time",
 
-  403: "Sorry, you are not authorized to access this page.",
+  403: "Sorry, you are not authorized to access this page or the resource.",
   404: "Sorry, the page you visited does not exist.",
   500: "Sorry, the server is wrong.",
   backHome: "Back Home",
