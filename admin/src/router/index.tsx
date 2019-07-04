@@ -5,9 +5,13 @@ import { Register } from "../pages/Register";
 import { DashBoard } from "../pages/DashBoard";
 import { Ownspace } from "../pages/Ownspace";
 import { UserManager } from "../pages/UserManager";
-import { Articles } from "../pages/Articles";
+import { ArticleManager } from "../pages/ArticleManager";
 import { ArticleEditor } from "../pages/ArticleEditor";
 import { TagManager } from "../pages/TagManager";
+
+import { BaseComponent as _403 } from "../pages/403";
+import { BaseComponent as _404 } from "../pages/404";
+import { BaseComponent as _500 } from "../pages/500";
 
 export interface IRoute {
   path?: string;
@@ -60,7 +64,7 @@ export const routes: IRoute[] = [
         path: "/article/list",
         icon: "table",
         title: "articleList",
-        component: Articles
+        component: ArticleManager
       },
 
       {
@@ -105,6 +109,10 @@ export const Router: React.FC = () => {
         .map(({ path, component }) => (
           <Route key={path} path={path} exact={true} component={component} />
         ))}
+      <Route key={"403"} path={"/403"} exact={true} component={_403} />
+      <Route key={"404"} path={"/404"} exact={true} component={_404} />
+      <Route key={"500"} path={"/500"} exact={true} component={_500} />
+      <Route component={_404} />
       <Redirect path="/article" to="/article/list" />
     </Switch>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Avatar, message, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 
@@ -14,42 +14,36 @@ const colors = [
   "rgb(47, 84, 235)"
 ];
 
+const changeColor = (
+  color: string,
+  compilingMsg: string,
+  failedMsg: string
+): Promise<any> => {
+  const hide = message.loading(compilingMsg, 0);
+  let vars = {
+    "@primary-color": color,
+    "@btn-primary-bg": color
+  };
+  return less
+    .modifyVars(vars)
+    .then(() => {
+      window.localStorage.setItem("currentColor", color);
+      return Promise.resolve();
+    })
+    .catch((error: any) => {
+      message.error(failedMsg);
+      return Promise.reject();
+    })
+    .finally(hide);
+};
+
 export const ThemeColor: React.FC = () => {
   const { t } = useTranslation();
-  const lessModifyColorVars = (color: string) => {
-    const hide = message.loading(t("compilingTheme"), 0);
-
-    let vars = {
-      "@primary-color": color,
-      "@btn-primary-bg": color
-    };
-
-    return less
-      .modifyVars(vars)
-      .then(() => Promise.resolve())
-      .catch((error: any) => {
-        message.error(t("compileThemeFailed"));
-        return Promise.reject();
-      })
-      .finally(hide);
-  };
   const [currentColor, setCurrentColor] = useState(
     window.localStorage.getItem("currentColor") || colors[0]
   );
-
-  const changeColor = (color: string) => {
-    lessModifyColorVars(color).then(() => {
-      window.localStorage.setItem("currentColor", color);
-      setCurrentColor(color);
-    });
-  };
-
-  useEffect(() => {
-    let color = window.localStorage.getItem("currentColor");
-    if (color && color !== currentColor) {
-      lessModifyColorVars(color);
-    }
-  }, [currentColor, lessModifyColorVars]);
+  const compilingMsg = t("compilingTheme");
+  const failedMsg = t("compileThemeFailed");
 
   return (
     <>
@@ -60,7 +54,9 @@ export const ThemeColor: React.FC = () => {
             style={{ display: "inline-block" }}
             key={color}
             onClick={() => {
-              changeColor(color);
+              changeColor(color, compilingMsg, failedMsg).then(() => {
+                setCurrentColor(color);
+              });
             }}
           >
             <Avatar

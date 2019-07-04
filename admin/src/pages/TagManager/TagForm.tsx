@@ -4,7 +4,7 @@ import { FormComponentProps } from "antd/lib/form/Form";
 import { useTranslation } from "react-i18next";
 
 type Props = {
-  name?: string;
+  label?: string;
   value?: string;
   onSubmit: Function;
   renderFooter?: (arg: {
@@ -17,8 +17,8 @@ const BaseComponent: React.FC<Props & FormComponentProps> = (
   props: Props & FormComponentProps
 ) => {
   const { t } = useTranslation();
-  const { form, name, value, onSubmit, renderFooter } = props;
-  const { getFieldDecorator, getFieldsError, resetFields } = form;
+  const { form, label, value, onSubmit, renderFooter } = props;
+  const { getFieldDecorator, getFieldsError } = form;
 
   function hasErrors(fieldsError: any) {
     return Object.keys(fieldsError).some((field: any) => fieldsError[field]);
@@ -35,16 +35,16 @@ const BaseComponent: React.FC<Props & FormComponentProps> = (
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Item label={t("tagName")}>
+      <Form.Item label={t("tagLabel")}>
         {getFieldDecorator(
-          "name",
+          "label",
           Object.assign(
             {
-              rules: [{ required: true, message: "Please input tag name!" }]
+              rules: [{ required: true, message: "Please input tag label!" }]
             },
-            name ? { initialValue: name } : {}
+            label ? { initialValue: label } : {}
           )
-        )(<Input placeholder={t("tagName")} />)}
+        )(<Input placeholder={t("tagLabel")} />)}
       </Form.Item>
       <Form.Item label={t("tagValue")}>
         {getFieldDecorator(

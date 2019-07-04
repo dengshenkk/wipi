@@ -76,7 +76,7 @@ const BaseComponent: React.FC<Props> = (props: Props) => {
   );
 };
 
-export const CreateUser = connect(
+export const CreateTag = connect(
   mapStateToProps,
   mapDispatchToProps
 )(BaseComponent);

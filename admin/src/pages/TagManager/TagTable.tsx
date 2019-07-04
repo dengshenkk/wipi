@@ -21,10 +21,10 @@ export const TagTable: React.FC<Props> = props => {
 
   const columns: ColumnProps<ITag>[] = [
     {
-      title: t("tagName"),
+      title: t("tagLabel"),
       width: 100,
-      dataIndex: "name",
-      key: "name"
+      dataIndex: "label",
+      key: "label"
     },
     {
       title: t("tagValue"),
@@ -66,7 +66,7 @@ export const TagTable: React.FC<Props> = props => {
         style={{ backgroundColor: "#fff" }}
         columns={columns}
         dataSource={tags}
-        rowKey={"name"}
+        rowKey={"id"}
         pagination={{
           defaultPageSize: 10,
           showSizeChanger: true,

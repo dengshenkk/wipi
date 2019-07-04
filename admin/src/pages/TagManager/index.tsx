@@ -10,7 +10,7 @@ import {
 } from "../../store/modules/tag/tag.action";
 import { ITag } from "../../store/modules/tag/tag.interface";
 import { PageHeader } from "../../components/PageHeader";
-import { CreateUser } from "./CreateTag";
+import { CreateTag } from "./CreateTag";
 import { TagTable } from "./TagTable";
 
 const mapStateToProps = (state: IState) => ({
@@ -34,7 +34,6 @@ const UsersComponent: React.FC<Props> = props => {
   useEffect(() => {
     console.log("组件装载");
     fetchTags();
-
     return () => {
       console.log("组件卸载");
     };
@@ -44,7 +43,7 @@ const UsersComponent: React.FC<Props> = props => {
     <>
       <PageHeader title={t("tagManager")} />
       <div style={{ background: "#fff", padding: 15 }}>
-        <CreateUser />
+        <CreateTag />
         <TagTable
           loading={loading}
           tags={tags}

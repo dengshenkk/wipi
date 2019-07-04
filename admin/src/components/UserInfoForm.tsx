@@ -30,7 +30,7 @@ const BaseComponent: React.FC<Props & FormComponentProps> = (
     showUserRoleField,
     onSubmit
   } = props;
-  const { getFieldDecorator, getFieldsError, resetFields } = form;
+  const { getFieldDecorator, getFieldsError } = form;
 
   function hasErrors(fieldsError: any) {
     return Object.keys(fieldsError).some((field: any) => fieldsError[field]);

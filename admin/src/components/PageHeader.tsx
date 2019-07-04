@@ -26,9 +26,10 @@ function usePortal(node: any) {
     }
 
     return () => {
+      // eslint-disable-next-line
       rootElement.current.remove();
     };
-  }, []);
+  }, [rootElement, node]);
 
   return rootElement.current;
 }

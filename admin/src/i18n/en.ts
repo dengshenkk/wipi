@@ -8,6 +8,13 @@ export default {
   cancel: "Cancel",
   normal: "Normal User",
   admin: "Admin User",
+  createAt: "Create Time",
+  updateAt: "Update Time",
+  publishAt: "Publish Time",
+
+  403: "Sorry, you are not authorized to access this page.",
+  404: "Sorry, the page you visited does not exist.",
+  500: "Sorry, the server is wrong.",
 
   // 路由菜单
   dashBoard: "DashBoard",
@@ -49,8 +56,7 @@ export default {
   // 用户管理
   name: "Name",
   role: "Role",
-  createAt: "Create Time",
-  updateAt: "Update Time",
+
   lastLoginAt: "Last Login Time",
   actions: "Actions",
   areYouSure: "Are you sure?",
@@ -62,7 +68,7 @@ export default {
   updateFailMsg: "Update user failed!",
 
   // 标签管理
-  tagName: "Name",
+  tagLabel: "Name",
   tagValue: "Value",
   createTag: "Create Tag",
   createTagSuccessMsg: "Create tag successfully!",
@@ -79,6 +85,11 @@ export default {
   articleCover: "Article Cover",
   articleTags: "Article Tags",
   articleStatus: "Article Status",
+  articleTitleMissingError: "Please input the Title",
+  articleSummaryMissingError: "Please input the Summary",
+  articleContentMissingError: "Please input the Content",
+  articleTagsMissingError: "Please select the Tags",
+  articleStatusMissingError: "Please select the Status",
   draft: "draft",
   publish: "publish",
   createArticleSuccessMsg: "Create Article successfully",

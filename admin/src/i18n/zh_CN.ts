@@ -8,6 +8,13 @@ export default {
   cancel: "取消",
   normal: "普通用户",
   admin: "管理员",
+  createAt: "创建时间",
+  updateAt: "更新时间",
+  publishAt: "发布时间",
+
+  403: "对不起，您无权访问该页面。",
+  404: "对不起，您访问的页面不存在。",
+  500: "对不起，当前服务器出错。",
 
   // 路由菜单
   dashBoard: "工作台",
@@ -20,7 +27,7 @@ export default {
   // 页面设置
   themeColor: "主题色",
   compilingTheme: "正在编译......",
-  compileThemeFailed: "编译主题失败!",
+  compileThemeFailed: "编译主题失败！",
   layoutMode: "布局模式",
   navMenuTheme: "导航菜单主题",
   navMenuThemeLight: "亮色",
@@ -49,27 +56,26 @@ export default {
   // 用户管理
   name: "账户",
   role: "角色",
-  createAt: "创建时间",
-  updateAt: "更新时间",
+
   lastLoginAt: "最后登录时间",
   actions: "操作",
   areYouSure: "确定删除？",
   createUser: "创建新用户",
-  createSuccessMsg: "创建新用户 成功!",
-  createFailMsg: "创建新用户 失败!",
+  createSuccessMsg: "创建新用户 成功！",
+  createFailMsg: "创建新用户 失败！",
   updateUser: "更新用户信息",
-  updateSuccessMsg: "更新用户信息 成功!",
-  updateFailMsg: "更新用户信息 失败!",
+  updateSuccessMsg: "更新用户信息 成功！",
+  updateFailMsg: "更新用户信息 失败！",
 
   // 标签管理
-  tagName: "标签名",
+  tagLabel: "标签名",
   tagValue: "标签值",
   createTag: "新建标签",
-  createTagSuccessMsg: "创建标签成功!",
-  createTagFailMsg: "创建标签失败!",
+  createTagSuccessMsg: "创建标签成功！",
+  createTagFailMsg: "创建标签失败！",
   updateTag: "更新标签",
-  updateTagSuccessMsg: "更新标签成功!",
-  updateTagFailMsg: "更新标签失败!",
+  updateTagSuccessMsg: "更新标签成功！",
+  updateTagFailMsg: "更新标签失败！",
 
   // 文章管理
   articleEditor: "文章编辑",
@@ -79,10 +85,15 @@ export default {
   articleCover: "文章封面",
   articleTags: "文章标签",
   articleStatus: "文章状态",
+  articleTitleMissingError: "请输入文章标题",
+  articleSummaryMissingError: "请输入文章摘要",
+  articleContentMissingError: "请输入文章正文",
+  articleTagsMissingError: "请选择文章标签",
+  articleStatusMissingError: "请选择文章状态",
   draft: "草稿",
   publish: "发布",
   createArticleSuccessMsg: "新建文章成功",
-  createArticleFailMsg: "新建文章失败!",
+  createArticleFailMsg: "新建文章失败！",
   updateArticleSuccessMsg: "更新文章成功",
-  updateArticleFailMsg: "更新文章失败!"
+  updateArticleFailMsg: "更新文章失败！"
 };
