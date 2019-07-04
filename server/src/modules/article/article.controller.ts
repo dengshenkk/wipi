@@ -1,6 +1,7 @@
 import * as Koa from 'koa'
 import { getRepository, Repository } from 'typeorm'
 import * as HTTPStatusCodes from 'http-status-codes'
+import * as moment from 'moment'
 import { getTagById } from '../tag/tag.service'
 import { ArticleEntity } from './article.entity'
 import { marked } from './article.service'
@@ -15,6 +16,7 @@ class ArticleController {
     const articles = await this.repo
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.tags', 'tags')
+      .leftJoinAndSelect('article.author', 'author')
       .getMany()
     ctx.body = { data: articles }
   }
@@ -31,11 +33,13 @@ class ArticleController {
   }
 
   async createArticle(ctx: Koa.Context) {
+    let currentUser = ctx.request.body.currentUser
     const { html, toc } = marked(ctx.request.body.content)
     let tags = ctx.request.body.tags
-    tags = tags.replace(/\[|\]/g, '').split(',')
+    try {
+      tags = tags.replace(/\[|\]/g, '').split(',')
+    } catch (e) {}
     tags = await Promise.all(tags.map(getTagById))
-
     delete ctx.request.body.tags
 
     const article = this.repo.create({
@@ -43,6 +47,7 @@ class ArticleController {
       html,
       tags,
       toc: JSON.stringify(toc, null, 2),
+      author: currentUser.id,
     })
 
     await this.repo.save(article)
@@ -50,13 +55,24 @@ class ArticleController {
   }
 
   async updateArticle(ctx: Koa.Context) {
-    const article = await this.repo.findOne(ctx.param.id)
+    const article = await this.repo.findOne(ctx.params.id)
 
     if (!article) {
       ctx.throw(HTTPStatusCodes.NOT_FOUND)
     }
 
-    const updatedArticle = await this.repo.merge(article, ctx.request.body)
+    let tags = ctx.request.body.tags
+    try {
+      tags = tags.replace(/\[|\]/g, '').split(',')
+    } catch (e) {}
+    tags = await Promise.all(tags.map(getTagById))
+    delete ctx.request.body.tags
+
+    const updatedArticle = await this.repo.merge(article, {
+      ...ctx.request.body,
+      tags,
+      updateAt: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+    })
     this.repo.save(updatedArticle)
     ctx.body = { data: updatedArticle }
   }
