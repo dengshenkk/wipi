@@ -68,10 +68,15 @@ export const getUsers = async () => {
 
 export const getUser = async (user: IUser) => {
   const repo = getRepo()
-  const ret = await repo.findOne({
-    name: user.name,
-    password: encrypt(user.password),
-  })
+  const ret = await repo
+    .createQueryBuilder('user')
+    .leftJoinAndSelect('user.articles', 'articles')
+    .where('name=:name')
+    .setParameter('name', user.name)
+    .where('password=:password')
+    .setParameter('password', encrypt(user.password))
+    .getOne()
+
   return ret
 }
 
