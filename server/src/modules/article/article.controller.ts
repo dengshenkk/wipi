@@ -56,8 +56,14 @@ class ArticleController {
   }
 
   async updateArticle(ctx: Koa.Context) {
-    const article = await this.repo.findOne(ctx.params.id)
-    const author = ctx.request.body
+    const article = await this.repo
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.author', 'author')
+      .where('article.id=:id')
+      .setParameter('id', ctx.params.id)
+      .getOne()
+
+    const author = article.author
     const currentUser = ctx.request.body.currentUser
     const can = await isAdmin(currentUser)
 
