@@ -1,6 +1,5 @@
 import * as Marked from 'marked'
 import * as hljs from 'highlight.js'
-import { IToc } from './article.interface'
 
 const renderer = new Marked.Renderer()
 
@@ -15,17 +14,13 @@ Marked.setOptions({
   renderer,
 })
 
-export const marked = (content: string): { html: string; toc: Array<IToc> } => {
-  const toc: Array<IToc> = []
+export const marked = (content: string): { html: string; toc: any } => {
+  const toc: any[] | (string | number)[][] = []
 
   renderer.heading = function(text: string, level: number) {
     let anchor = 'heading-' + toc.length
 
-    toc.push({
-      level: level,
-      anchor: anchor,
-      title: text,
-    })
+    toc.push([level, anchor, text])
     return `<h${level} id="${anchor}">${text}</h${level}>`
   }
 
@@ -36,5 +31,5 @@ export const marked = (content: string): { html: string; toc: Array<IToc> } => {
   }
 
   let html = marked(content)
-  return { html, toc }
+  return { html, toc: JSON.stringify(toc, null, 2) }
 }

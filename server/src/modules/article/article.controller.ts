@@ -36,6 +36,7 @@ class ArticleController {
   async createArticle(ctx: Koa.Context) {
     let currentUser = ctx.request.body.currentUser
     const { html, toc } = marked(ctx.request.body.content)
+    const { html: summary } = marked(ctx.request.body.summary)
     let tags = ctx.request.body.tags
     try {
       tags = tags.replace(/\[|\]/g, '').split(',')
@@ -47,7 +48,8 @@ class ArticleController {
       ...ctx.request.body,
       html,
       tags,
-      toc: JSON.stringify(toc, null, 2),
+      summary,
+      toc,
       author: currentUser.id,
     })
 
@@ -65,9 +67,8 @@ class ArticleController {
 
     const author = article.author
     const currentUser = ctx.request.body.currentUser
-    const can = await isAdmin(currentUser)
 
-    if (!can && author.id !== currentUser.id) {
+    if (author.id !== currentUser.id) {
       ctx.throw(HTTPStatusCodes.FORBIDDEN)
     }
 
@@ -80,11 +81,18 @@ class ArticleController {
       tags = tags.replace(/\[|\]/g, '').split(',')
     } catch (e) {}
     tags = await Promise.all(tags.map(getTagById))
+
+    const { html, toc } = marked(ctx.request.body.content)
+    const { html: summary } = marked(ctx.request.body.summary)
+
     delete ctx.request.body.tags
 
     const updatedArticle = await this.repo.merge(article, {
       ...ctx.request.body,
       tags,
+      summary,
+      html,
+      toc,
       updateAt: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
     })
     this.repo.save(updatedArticle)

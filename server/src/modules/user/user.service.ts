@@ -71,10 +71,10 @@ export const getUser = async (user: IUser) => {
   const ret = await repo
     .createQueryBuilder('user')
     .leftJoinAndSelect('user.articles', 'articles')
-    .where('name=:name')
-    .setParameter('name', user.name)
-    .where('password=:password')
-    .setParameter('password', encrypt(user.password))
+    .where('name=:name and password=:password', {
+      name: user.name,
+      password: encrypt(user.password),
+    })
     .getOne()
 
   return ret

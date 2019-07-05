@@ -6,13 +6,9 @@ import { useErrorHandler } from './middlewares/error'
 import { useTokenParser } from './middlewares/tokenParser'
 
 export function useMiddlewares(app: Koa) {
-  void [
-    useErrorHandler,
-    cors,
-    // useAuth,
-    bodyparser,
-    useTokenParser,
-  ].forEach(bootstrapMiddleware => {
-    app.use(bootstrapMiddleware())
-  })
+  void [useErrorHandler, cors, useAuth, bodyparser, useTokenParser].forEach(
+    bootstrapMiddleware => {
+      app.use(bootstrapMiddleware())
+    },
+  )
 }

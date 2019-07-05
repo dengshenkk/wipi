@@ -10,7 +10,6 @@ import { UserEntity } from '../user/user.entity'
 import { IUser } from '../user/user.interface'
 import { TagEntity } from '../tag/tag.entity'
 import { ITag } from '../tag/tag.interface'
-import { IToc } from './article.interface'
 
 @Entity()
 export class ArticleEntity {
@@ -33,7 +32,7 @@ export class ArticleEntity {
   html: string
 
   @Column('simple-array')
-  toc: IToc[]
+  toc: [string]
 
   @ManyToOne(type => UserEntity, (user: IUser) => user.articles, {
     cascade: true,
