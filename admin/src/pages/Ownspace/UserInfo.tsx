@@ -72,6 +72,7 @@ export const BaseComponent = (props: Props) => {
                 try {
                   await updateUser(user, values);
                   message.success(t("updateSuccessMsg"));
+                  toggleVisible(false);
                 } catch (e) {
                   message.error(t("updateFailMsg"));
                 }

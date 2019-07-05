@@ -1,45 +1,65 @@
-import React from "react";
-import { List } from "antd";
+import React, { useState } from "react";
+import { List, Button, Tag } from "antd";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { IArticle } from "../../store/modules/article/article.interface";
+import { ArticlePreview } from "../../components/ArticlePreview";
+import { useTranslation } from "react-i18next";
 
-type Props = {
+type Props = RouteComponentProps & {
   articles: IArticle[];
 };
 
-export const ArticleList = (props: Props) => {
-  const { articles } = props;
+export const BaseComponent = (props: Props) => {
+  const { articles, history } = props;
+  const { t } = useTranslation();
+  const [visible, toggleVisible] = useState(false);
 
   return (
     <List
-      itemLayout="vertical"
+      itemLayout="horizontal"
       size="large"
       dataSource={articles}
       renderItem={(article: IArticle) => (
         <List.Item
           key={article.title}
-          actions={
-            [
-              // <IconText type="star-o" text="156" />,
-              // <IconText type="like-o" text="156" />,
-              // <IconText type="message" text="2" />,
-            ]
-          }
-          extra={
-            <img
-              width={272}
-              alt="logo"
-              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-            />
-          }
+          actions={[
+            <Button type="link" onClick={() => toggleVisible(true)}>
+              {t("preview")}
+            </Button>,
+            <Button
+              type="link"
+              onClick={() => {
+                history.push({
+                  pathname: "/article/new",
+                  state: article
+                });
+              }}
+            >
+              {t("edit")}
+            </Button>
+          ]}
         >
           <List.Item.Meta
             // avatar={<Avatar src={item.avatar} />}
             title={article.title}
             description={article.summary}
           />
-          {article.content}
+          {article.tags
+            ? article.tags.map(tag =>
+                tag ? (
+                  <Tag key={tag.id + "" + tag.label}>{tag.label}</Tag>
+                ) : null
+              )
+            : null}
+          <ArticlePreview
+            visible={visible}
+            article={article}
+            onClose={() => toggleVisible(false)}
+          />
         </List.Item>
       )}
     />
   );
 };
+
+export const ArticleList = withRouter(BaseComponent);

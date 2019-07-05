@@ -59,7 +59,12 @@ const BaseComponent: React.FC<Props> = props => {
   const [content, setContent] = useState(
     (oldArticle && oldArticle.content) || ""
   );
-  const [tags, setTags] = useState((oldArticle && [...oldArticle.tags]) || []);
+  const [tags, setTags] = useState(
+    (oldArticle &&
+      oldArticle.tags &&
+      oldArticle.tags.length && [...oldArticle.tags]) ||
+      []
+  );
   // const [cover, setCover] = useState((oldArticle && oldArticle.cover) || "");
   const [status, setStatus] = useState((oldArticle && oldArticle.status) || "");
 

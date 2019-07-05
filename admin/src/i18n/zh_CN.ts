@@ -81,10 +81,13 @@ export default {
   updateTagFailMsg: "更新标签失败！",
   deleteTagSuccessMsg: "删除标签成功！",
   deleteTagFailMsg: "删除标签失败！",
+  tokenExpired: "请重新登录",
 
   // 文章管理
   author: "作者",
   article: "文章",
+  preview: "预览",
+  articlePreview: "文章预览",
   articleEditor: "文章编辑",
   articleTitle: "文章标题",
   articleSummary: "文章摘要",

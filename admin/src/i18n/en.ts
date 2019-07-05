@@ -49,6 +49,7 @@ export default {
   confirmPassword: "Confirm Password",
   twoPasswordNotEqual: "Two passwords are inconsistent",
   assignUserRole: "Assign Role",
+  tokenExpired: "Token expired, please login again!",
 
   // 个人中心
   ownspace: "Ownspace",
@@ -85,6 +86,8 @@ export default {
   // 文章管理
   author: "Author",
   article: "Article",
+  preview: "preview",
+  articlePreview: "Article Preview",
   articleEditor: "Article Editor",
   articleTitle: "Article Title",
   articleSummary: "Article Summary",

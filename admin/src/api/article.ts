@@ -1,6 +1,9 @@
 import { IArticle } from "./../store/modules/article/article.interface";
 import { http } from "./http";
 
+export const fetchArticle = (id: string): Promise<any> =>
+  http({ method: "GET", url: `/article/${id}` });
+
 export const fetchArticles = (): Promise<any> =>
   http({ method: "GET", url: "/article" });
 

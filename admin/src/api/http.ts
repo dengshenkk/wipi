@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getHistory } from "../history";
+import { getHistory, getTranslate } from "../history";
+import { message } from "antd";
 
 export const http = axios.create({
   baseURL: "http://localhost:4000/api/v1",
@@ -31,19 +32,32 @@ http.interceptors.response.use(
     }
   },
   err => {
-    if (+err.response.status === 504 || +err.response.status === 404) {
-      console.error({ message: "API, 服务器被吃了⊙﹏⊙∥", err });
-      const history = getHistory();
-      history && history.replace("/404");
-    } else if (+err.response.status === 403) {
-      console.error({ message: "API, 权限不足,请联系管理员!", err });
-      const history = getHistory();
-      history && history.replace("/403");
-    } else if (+err.response.status !== 400) {
-      const history = getHistory();
-      history && history.replace("/500");
-      console.error({ message: "API, 未知错误!", err });
+    const status = +err.response.status;
+    const history = getHistory();
+
+    switch (status) {
+      case 400:
+        break;
+
+      case 401:
+        history.replace("/login");
+        message.info(getTranslate()("tokenExpired"));
+        break;
+
+      case 403:
+        history.replace("/403");
+        break;
+
+      case 404:
+        history.replace("/404");
+        break;
+
+      case 500:
+      default:
+        history.replace("/500");
+        break;
     }
+
     throw err;
   }
 );
