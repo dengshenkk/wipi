@@ -51,10 +51,14 @@ class TagController {
   }
 
   async deleteTag(ctx: Koa.Context) {
-    const tag = await this.repo.findOne(ctx.params.id)
+    const tag = await getTagByIdWithArticles(ctx.params.id)
 
     if (!tag) {
       ctx.throw(HTTPStatusCodes.NOT_FOUND)
+    }
+
+    if (tag.articles && tag.articles.length) {
+      ctx.throw(HTTPStatusCodes.BAD_REQUEST)
     }
 
     await this.repo.remove(tag) // 注意与 delete 的区别
