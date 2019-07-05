@@ -51,7 +51,13 @@ export const TagTable: React.FC<Props> = props => {
             title={t("areYouSure")}
             okText={t("confirm")}
             cancelText={t("cancel")}
-            onConfirm={() => deleteTag(tag.id)}
+            onConfirm={async () => {
+              try {
+                await deleteTag(tag.id);
+              } catch (e) {
+                message.error(t("deleteTagFailMsg"));
+              }
+            }}
           >
             <Button type="link">{t("delete")}</Button>
           </Popconfirm>

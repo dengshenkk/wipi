@@ -19,6 +19,7 @@ const BaseComponent: React.FC<Props & RouteComponentProps> = props => {
       theme={theme}
       mode={layoutMode !== "sider" ? "horizontal" : "inline"}
       defaultSelectedKeys={[pathname]}
+      selectedKeys={[pathname]}
     >
       {routes.slice(2).map(route => {
         if (route.children) {

@@ -34,12 +34,9 @@ const UsersComponent: React.FC<Props> = props => {
   const { users, count, loading, fetchUsers, updateUser, deleteUser } = props;
 
   useEffect(() => {
-    console.log("组件装载");
     fetchUsers();
 
-    return () => {
-      console.log("组件卸载");
-    };
+    return () => {};
   }, [fetchUsers]);
 
   return (

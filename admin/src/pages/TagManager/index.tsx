@@ -32,11 +32,8 @@ const UsersComponent: React.FC<Props> = props => {
   const { tags, loading, fetchTags, updateTag, deleteTag } = props;
 
   useEffect(() => {
-    console.log("组件装载");
     fetchTags();
-    return () => {
-      console.log("组件卸载");
-    };
+    return () => {};
   }, [fetchTags]);
 
   return (

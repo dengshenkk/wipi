@@ -79,8 +79,11 @@ export default {
   updateTag: "更新标签",
   updateTagSuccessMsg: "更新标签成功！",
   updateTagFailMsg: "更新标签失败！",
+  deleteTagSuccessMsg: "删除标签成功！",
+  deleteTagFailMsg: "删除标签失败！",
 
   // 文章管理
+  author: "作者",
   article: "文章",
   articleEditor: "文章编辑",
   articleTitle: "文章标题",

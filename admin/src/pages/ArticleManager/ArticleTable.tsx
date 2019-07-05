@@ -23,7 +23,6 @@ export const ArticleTable: React.FC<Props> = props => {
   const columns: ColumnProps<IArticle>[] = [
     {
       title: t("articleTitle"),
-      width: 100,
       dataIndex: "title",
       key: "title"
     },
@@ -34,7 +33,9 @@ export const ArticleTable: React.FC<Props> = props => {
       key: "tags",
       render: (tags: ITag[] = []) => (
         <>
-          {tags.map(tag => (tag ? <Tag key={tag.id}>{tag.label}</Tag> : null))}
+          {tags.map(tag =>
+            tag ? <Tag key={tag.id + "" + tag.label}>{tag.label}</Tag> : null
+          )}
         </>
       )
     },
@@ -98,9 +99,19 @@ export const ArticleTable: React.FC<Props> = props => {
         rowKey={"id"}
         expandedRowRender={(article: IArticle) => (
           <>
-            <Typography.Paragraph>{article.content}</Typography.Paragraph>
+            {article.html ? (
+              <Typography.Paragraph>
+                <div
+                  style={{ maxHeight: 300, overflow: "auto" }}
+                  dangerouslySetInnerHTML={{ __html: article.html }}
+                />
+              </Typography.Paragraph>
+            ) : null}
             {article.author ? (
-              <Typography.Paragraph>{article.author.name}</Typography.Paragraph>
+              <Typography.Paragraph>
+                {t("author")}:{" "}
+                <span style={{ fontWeight: 500 }}>{article.author.name}</span>
+              </Typography.Paragraph>
             ) : null}
           </>
         )}

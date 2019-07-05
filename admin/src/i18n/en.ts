@@ -69,6 +69,8 @@ export default {
   updateUser: "Update User Info",
   updateSuccessMsg: "Update user Successfully!",
   updateFailMsg: "Update user failed!",
+  deleteSuccessMsg: "Delete user Successfully!",
+  deleteFailMsg: "Delete user failed!",
 
   // 标签管理
   tagLabel: "Label",
@@ -81,6 +83,7 @@ export default {
   updateTagFailMsg: "Update tag failed!",
 
   // 文章管理
+  author: "Author",
   article: "Article",
   articleEditor: "Article Editor",
   articleTitle: "Article Title",

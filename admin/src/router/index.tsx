@@ -68,7 +68,7 @@ export const routes: IRoute[] = [
       },
 
       {
-        path: "/article/new",
+        path: "/article/new/",
         icon: "form",
         title: "createArticle",
         component: ArticleEditor
@@ -112,8 +112,8 @@ export const Router: React.FC = () => {
       <Route key={"403"} path={"/403"} exact={true} component={_403} />
       <Route key={"404"} path={"/404"} exact={true} component={_404} />
       <Route key={"500"} path={"/500"} exact={true} component={_500} />
-      <Route component={_404} />
       <Redirect path="/article" to="/article/list" />
+      <Route component={_404} />
     </Switch>
   );
 };

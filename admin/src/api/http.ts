@@ -39,7 +39,7 @@ http.interceptors.response.use(
       console.error({ message: "API, 权限不足,请联系管理员!", err });
       const history = getHistory();
       history && history.replace("/403");
-    } else {
+    } else if (+err.response.status !== 400) {
       const history = getHistory();
       history && history.replace("/500");
       console.error({ message: "API, 未知错误!", err });

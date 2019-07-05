@@ -24,8 +24,6 @@ export const fetchArticles = () => async (dispatch: Function) => {
 
 export const addArticle = (article: IArticle) => async (dispatch: Function) => {
   startLoading();
-
-  console.log("load", article);
   return addArticleAjax(article)
     .then(data => {
       dispatch(fetchArticles());

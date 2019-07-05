@@ -13,12 +13,6 @@ export const ArticleList = (props: Props) => {
     <List
       itemLayout="vertical"
       size="large"
-      pagination={{
-        onChange: page => {
-          console.log(page);
-        },
-        pageSize: 3
-      }}
       dataSource={articles}
       renderItem={(article: IArticle) => (
         <List.Item

@@ -33,12 +33,8 @@ const BaseComponent: React.FC<Props> = props => {
   const { articles, loading, fetchArticles, history, deleteArticle } = props;
 
   useEffect(() => {
-    console.log("组件装载");
     fetchArticles();
-
-    return () => {
-      console.log("组件卸载");
-    };
+    return () => {};
   }, [fetchArticles]);
 
   return (

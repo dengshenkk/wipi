@@ -16,7 +16,6 @@ export const login = (user: IUser) => async (dispatch: Function) => {
   startLoading();
   return loginAjax(user)
     .then(data => {
-      console.log(LOGIN, data);
       dispatch({ type: LOGIN, payload: data.data });
       return data;
     })
