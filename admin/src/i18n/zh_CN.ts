@@ -53,6 +53,8 @@ export default {
   // 个人中心
   ownspace: "个人中心",
   logout: "退出登录",
+  userInfo: "用户信息",
+  changePassword: "修改密码",
 
   // 用户管理
   name: "账户",
@@ -79,6 +81,7 @@ export default {
   updateTagFailMsg: "更新标签失败！",
 
   // 文章管理
+  article: "文章",
   articleEditor: "文章编辑",
   articleTitle: "文章标题",
   articleSummary: "文章摘要",

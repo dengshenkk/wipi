@@ -8,7 +8,6 @@ export const serverStatusReducer = (
   state = initialState,
   action: AnyAction
 ) => {
-  console.log("set");
   switch (action.type) {
     case SET_STATUS:
       return {

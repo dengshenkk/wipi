@@ -53,6 +53,8 @@ export default {
   // 个人中心
   ownspace: "Ownspace",
   logout: "Logout",
+  userInfo: "User Info",
+  changePassword: "Change Password",
 
   // 用户管理
   name: "Name",
@@ -69,7 +71,7 @@ export default {
   updateFailMsg: "Update user failed!",
 
   // 标签管理
-  tagLabel: "Name",
+  tagLabel: "Label",
   tagValue: "Value",
   createTag: "Create Tag",
   createTagSuccessMsg: "Create tag successfully!",
@@ -79,6 +81,7 @@ export default {
   updateTagFailMsg: "Update tag failed!",
 
   // 文章管理
+  article: "Article",
   articleEditor: "Article Editor",
   articleTitle: "Article Title",
   articleSummary: "Article Summary",

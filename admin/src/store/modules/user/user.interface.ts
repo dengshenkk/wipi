@@ -5,6 +5,7 @@ export interface IUser {
   createAt: "string";
   updateAt: "string";
   lastLoginAt: "string";
+  articles: [];
 }
 
 export interface IUserState {

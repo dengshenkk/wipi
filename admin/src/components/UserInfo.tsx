@@ -43,7 +43,9 @@ const User = (props: Props) => {
           size={"small"}
           icon="user"
         />
-        {currentUser ? <span>{currentUser.name}</span> : null}
+        {currentUser ? (
+          <span style={{ marginLeft: 8 }}>Hi, {currentUser.name}</span>
+        ) : null}
       </div>
     </Dropdown>
   );

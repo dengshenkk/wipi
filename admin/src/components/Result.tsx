@@ -19,7 +19,9 @@ export const BaseComponent: React.FC<Props> = (props: Props) => {
       <Typography.Title>{title}</Typography.Title>
       <Typography.Paragraph>{subTitle}</Typography.Paragraph>
       <div className="result-extra">
-        <Button onClick={() => history.replace("/")}>{t("backHome")}</Button>
+        <Button type="primary" onClick={() => history.replace("/")}>
+          {t("backHome")}
+        </Button>
       </div>
     </div>
   );

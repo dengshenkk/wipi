@@ -1,7 +1,12 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { persistStore, persistReducer } from "redux-persist";
+import storageSession from "redux-persist/lib/storage/session";
+import { composeWithDevTools } from "redux-devtools-extension";
+
 import { ILoading } from "./modules/loading/loading.interface";
 import { loadingReducer } from "./modules/loading/loading.reducer";
+
 import { IUserState } from "./modules/user/user.interface";
 import { userReducer } from "./modules/user/user.reducer";
 
@@ -30,4 +35,15 @@ const rootReducer = combineReducers({
   serverStatus: serverStatusReducer
 });
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+const storageConfig = {
+  key: "root",
+  storage: storageSession,
+  blacklist: ["name", "age"]
+};
+
+const _persistReducer = persistReducer(storageConfig, rootReducer);
+export const store = createStore(
+  _persistReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+export const persistor = persistStore(store);

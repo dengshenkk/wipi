@@ -2,8 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/lib/integration/react";
 import * as serviceWorker from "./serviceWorker";
-import { store } from "./store";
+import { store, persistor } from "./store";
 import App from "./App";
 import { History } from "./history";
 import "./i18n";
@@ -12,8 +13,10 @@ import "./styles/main.less";
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <History />
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <History />
+        <App />
+      </PersistGate>
     </Provider>
   </BrowserRouter>,
   document.getElementById("root")

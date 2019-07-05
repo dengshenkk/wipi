@@ -1,85 +1,51 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { Row, Col, Tabs } from "antd";
+import { connect } from "react-redux";
+import { IState } from "../../store";
+import { PageHeader } from "../../components/PageHeader";
 
-import { Row, Col, List, Avatar, Icon } from "antd";
+import { ArticleList } from "./ArticleList";
+import { UserInfo } from "./UserInfo";
 
-interface IList {
-  href: string;
-  title: string;
-  avatar: string;
-  description: string;
-  content: string;
-}
+const mapStateToProps = (state: IState) => ({
+  currentUser: state.user.currentUser
+});
 
-const listData: IList[] = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: "http://ant.design",
-    title: `ant design part ${i}`,
-    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    description:
-      "Ant Design, a design language for background applications, is refined by Ant UED Team.",
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently."
-  });
-}
+type Props = ReturnType<typeof mapStateToProps>;
 
-const IconText = ({ type, text }: { type: string; text: any }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
-    {text}
-  </span>
-);
+const BaseComponent = (props: Props) => {
+  const { t } = useTranslation();
+  const { currentUser } = props;
 
-const BaseComponent = () => {
   return (
     <>
-      <Row>
-        <Col />
-        <Col>
-          <List
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              onChange: page => {
-                console.log(page);
-              },
-              pageSize: 3
-            }}
-            dataSource={listData}
-            footer={
-              <div>
-                <b>ant design</b> footer part
-              </div>
-            }
-            renderItem={item => (
-              <List.Item
-                key={item.title}
-                actions={[
-                  <IconText type="star-o" text="156" />,
-                  <IconText type="like-o" text="156" />,
-                  <IconText type="message" text="2" />
-                ]}
-                extra={
-                  <img
-                    width={272}
-                    alt="logo"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+      <PageHeader title={t("ownspace")} />
+      <div>
+        <Row gutter={16}>
+          <Col sm={6}>
+            <div style={{ background: "#fff", padding: 15 }}>
+              <UserInfo user={currentUser} />
+            </div>
+          </Col>
+          <Col sm={18} style={{ background: "#fff", padding: 15 }}>
+            <div style={{ background: "#fff", padding: 15 }}>
+              <Tabs>
+                <Tabs.TabPane tab={t("article")} key={"article"}>
+                  <ArticleList
+                    articles={(currentUser && currentUser.articles) || []}
                   />
-                }
-              >
-                <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={<a href={item.href}>{item.title}</a>}
-                  description={item.description}
-                />
-                {item.content}
-              </List.Item>
-            )}
-          />
-        </Col>
-      </Row>
+                </Tabs.TabPane>
+              </Tabs>
+            </div>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 };
 
-export const Ownspace = BaseComponent;
+export const Ownspace = connect(
+  mapStateToProps,
+  null
+)(BaseComponent);
