@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
-import { Menu, Dropdown, Avatar } from "antd";
+import { NavLink, withRouter, RouteComponentProps } from "react-router-dom";
+import { Menu, Dropdown, Avatar, message } from "antd";
 import { connect } from "react-redux";
 import { IState } from "../store";
 
@@ -9,11 +9,16 @@ const mapStateToProps = (state: IState) => ({
   currentUser: state.user.currentUser
 });
 
-type Props = ReturnType<typeof mapStateToProps>;
+type Props = ReturnType<typeof mapStateToProps> & RouteComponentProps;
 
-const User = (props: Props) => {
+const BaseComponent = (props: Props) => {
   const { t } = useTranslation();
-  const { currentUser } = props;
+  const { currentUser, history } = props;
+
+  if (!currentUser) {
+    message.info(t("tokenExpired"));
+    history.replace("/login");
+  }
 
   const menu = () => {
     return (
@@ -54,4 +59,4 @@ const User = (props: Props) => {
 export const UserInfo = connect(
   mapStateToProps,
   null
-)(User);
+)(withRouter(BaseComponent));

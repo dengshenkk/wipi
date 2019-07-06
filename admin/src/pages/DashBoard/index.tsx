@@ -1,48 +1,33 @@
 import React from "react";
-import { Statistic, Row, Icon } from "antd";
-import { CardContainer } from "./CardContainer";
-import { LineChart } from "./LineChart";
-import { AreaChart } from "./AreaChart";
-import { ProgressChart } from "./ProgressChart";
+import { connect } from "react-redux";
+import { Row } from "antd";
+import { PageHeader } from "../../components/PageHeader";
+import { IState } from "../../store";
+import { useTranslation } from "react-i18next";
 
-export const DashBoard: React.FC = () => {
+const mapStateToProps = (state: IState) => ({
+  currentUser: state.user.currentUser
+});
+
+type Props = ReturnType<typeof mapStateToProps>;
+
+export const BaseComponent: React.FC<Props> = (props: Props) => {
+  const { currentUser } = props;
+  const { t } = useTranslation();
+
   return (
     <>
-      <Row gutter={16}>
-        <CardContainer span={12}>
-          <Statistic
-            title="Active"
-            value={11.28}
-            precision={2}
-            valueStyle={{ color: "#3f8600" }}
-            prefix={<Icon type="arrow-up" />}
-            suffix="%"
-          />
-        </CardContainer>
+      <PageHeader
+        title={t("dashBoard")}
+        subTitle={"Hi, " + (currentUser && currentUser.name)}
+      />
 
-        <CardContainer span={12}>
-          <Statistic
-            title="Idle"
-            value={9.3}
-            precision={2}
-            valueStyle={{ color: "#cf1322" }}
-            prefix={<Icon type="arrow-down" />}
-            suffix="%"
-          />
-        </CardContainer>
-
-        <CardContainer span={24}>
-          <AreaChart />
-        </CardContainer>
-
-        <CardContainer span={12}>
-          <LineChart />
-        </CardContainer>
-
-        <CardContainer span={12}>
-          <ProgressChart />
-        </CardContainer>
-      </Row>
+      <Row gutter={16}>工作台 待完工......</Row>
     </>
   );
 };
+
+export const DashBoard = connect(
+  mapStateToProps,
+  null
+)(BaseComponent);
