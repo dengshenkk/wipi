@@ -25,5 +25,10 @@ const config: IConfig = {
       // /^\/api\/v1\/tag/,
     ],
   },
+  defaultUser: {
+    name: 'plarum',
+    password: 'plarum',
+    role: 'admin',
+  },
 }
 export default config

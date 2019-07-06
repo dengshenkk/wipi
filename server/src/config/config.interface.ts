@@ -17,4 +17,9 @@ export interface IConfig {
     expires: number
     unless: RegExp[]
   }
+  defaultUser?: {
+    name: string
+    password: string
+    role: string
+  }
 }
