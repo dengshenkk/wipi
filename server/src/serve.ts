@@ -24,6 +24,5 @@ connectPostgreSQL()
     }
   })
   .catch(err => {
-    console.error('Connect to PostgreSQL failed.')
-    throw new Error(err)
+    console.error('Start server failed.', err)
   })
