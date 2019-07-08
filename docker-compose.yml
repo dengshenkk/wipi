@@ -1,50 +1,22 @@
-# version: "3"
-# services:
-#   admin:
-#     image: nginx:latest
-#     container_name: "plarum_admin"
-#     build: ./admin
-#     ports:
-#       - "8080:80"
-#     volumes:
-#       - ./admin/nginx.conf:/etc/nginx/conf.d/nginx.conf
-#       - ./admin/build:/usr/share/nginx/html
-
-#   server:
-#     restart: always
-#     container_name: "plarum_server"
-#     build: ./server
-#     ports:
-#       - "4000:4000"
-#     depends_on:
-#       - db
-
-#   db:
-#     container_name: "plarum_db"
-#     image: "postgres:11-alpine"
-#     restart: always
-#     privileged: true
-#     ports:
-#       - "5432:5432"
-#     environment:
-#       POSTGRES_USER: "plarum"
-#       POSTGRES_PASSWORD: "plarum"
-
 version: "3"
 services:
-  server:
+  admin:
+    container_name: admin
+    build: ./admin
+    ports:
+      - "8080:80"
+
+  api:
     restart: always
-    container_name: "plarum_server"
+    container_name: api
     build: ./server
     ports:
       - "4000:4000"
     depends_on:
       - db
-    networks:
-      - plarum_networks
 
   db:
-    container_name: "plarum_db"
+    container_name: db
     image: "postgres:11-alpine"
     restart: always
     privileged: true
@@ -53,24 +25,3 @@ services:
     environment:
       POSTGRES_USER: "plarum"
       POSTGRES_PASSWORD: "plarum"
-
-  admin:
-    image: node:12
-    command: npm run build
-    build: ./admin
-    networks:
-      - plarum_networks
-
-  nginx:
-    image: nginx
-    ports:
-      - "8080:80"
-    volumes:
-      - ./admin/nginx.conf:/etc/nginx/conf.d/nginx.conf
-      - ./admin/build:/usr/share/nginx/html
-    networks:
-      - plarum_networks
-
-networks:
-  plarum_networks:
-    driver: bridge
