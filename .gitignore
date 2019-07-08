@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# next
+.next
+
 # lock
 package-lock.json
 
