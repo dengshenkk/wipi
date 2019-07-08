@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import { Form, Button, Modal, message } from "antd";
+import { Form, Button, Modal } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { UserLayout } from "../layouts/UserLayout";
@@ -58,21 +58,17 @@ export const BaseComponent = (props: Props) => {
             </Form.Item>
           )}
           onSubmit={(values: any) => {
-            register(values)
-              .then(() => {
-                Modal.confirm({
-                  title: t("registerSuccessMsg"),
-                  content: t("registerSuccessHelpMsg"),
-                  onOk() {
-                    history.replace({ pathname: "/login" });
-                  },
-                  okText: t("confirm"),
-                  cancelText: t("cancel")
-                });
-              })
-              .catch(() => {
-                message.error(t("registerFailMsg"));
+            register(values).then(() => {
+              Modal.confirm({
+                title: t("registerSuccessMsg"),
+                content: t("registerSuccessHelpMsg"),
+                onOk() {
+                  history.replace({ pathname: "/login" });
+                },
+                okText: t("confirm"),
+                cancelText: t("cancel")
               });
+            });
           }}
         />
       </div>

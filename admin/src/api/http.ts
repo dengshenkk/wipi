@@ -37,7 +37,13 @@ http.interceptors.response.use(
   },
   err => {
     const status = +err.response.status;
+    const data = err.response.data;
     const history = getHistory();
+    const t = getTranslate();
+
+    if (data && data.status === "no") {
+      message.error(t(data.msg));
+    }
 
     switch (status) {
       case 400:

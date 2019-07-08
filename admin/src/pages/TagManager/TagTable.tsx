@@ -52,11 +52,7 @@ export const TagTable: React.FC<Props> = props => {
             okText={t("confirm")}
             cancelText={t("cancel")}
             onConfirm={async () => {
-              try {
-                await deleteTag(tag.id);
-              } catch (e) {
-                message.error(t("deleteTagFailMsg"));
-              }
+              await deleteTag(tag.id);
             }}
           >
             <Button type="link">{t("delete")}</Button>

@@ -1,4 +1,13 @@
 export default {
+  // API 接口错误码
+  AUTHENTICATION_FAILED:
+    "Authentication failed! You are not authorized to handle this resource",
+  AUTHORIZATION_EXPIRED: "Authorization expired! You should login again.",
+  MISSING_PARAMETERS: "Missing parameters!",
+  NAME_OR_PASSWORD_ERROR: "Name or Password is not correct!",
+  NAME_ALREADY_EXSIT: "Name is alreay exist!",
+  TAG_IS_USED: "Tag is used by some articles! Can't delete it!",
+
   // 通用
   create: "create",
   submit: "submit",

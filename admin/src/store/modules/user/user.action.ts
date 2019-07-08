@@ -51,6 +51,21 @@ export const fetchUsers = () => async (dispatch: Function) => {
     .finally(() => stopLoading());
 };
 
+export const updateCurrentUser = (user: IUser, info: IUser) => async (
+  dispatch: Function
+) => {
+  startLoading();
+  return updateUserAjax(user, info)
+    .then(data => {
+      dispatch({ type: LOGIN, payload: data.data });
+      return data;
+    })
+    .catch(e => {
+      throw e;
+    })
+    .finally(() => stopLoading());
+};
+
 export const updateUser = (user: IUser, info: IUser) => async (
   dispatch: Function
 ) => {

@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch, AnyAction } from "redux";
 import { useTranslation } from "react-i18next";
 import { UserInfoForm } from "../../components/UserInfoForm";
 import { IState } from "../../store";
-import { updateUser } from "../../store/modules/user/user.action";
+import { updateCurrentUser } from "../../store/modules/user/user.action";
 import { IUser } from "../../store/modules/user/user.interface";
 
 const mapStateToProps = (state: IState) => ({
@@ -13,7 +13,7 @@ const mapStateToProps = (state: IState) => ({
 });
 
 const mapDispatchToProps = (dispath: Dispatch<AnyAction>) =>
-  bindActionCreators({ updateUser }, dispath);
+  bindActionCreators({ updateCurrentUser }, dispath);
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> & {
@@ -22,7 +22,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 export const BaseComponent = (props: Props) => {
   const { t } = useTranslation();
-  const { loading, user, updateUser } = props;
+  const { loading, user, updateCurrentUser } = props;
   const [visible, toggleVisible] = useState(false);
 
   return (
@@ -70,7 +70,7 @@ export const BaseComponent = (props: Props) => {
             onSubmit={async (values: any) => {
               if (user) {
                 try {
-                  await updateUser(user, values);
+                  await updateCurrentUser(user, values);
                   message.success(t("updateSuccessMsg"));
                   toggleVisible(false);
                 } catch (e) {

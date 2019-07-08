@@ -43,15 +43,11 @@ const LoginForm = (props: IProps & RouteComponentProps) => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        login(values)
-          .then((res: { token: string }) => {
-            window.sessionStorage.setItem("token", res["token"]);
-            message.success(t("loginSuccessMsg"));
-            history.replace({ pathname: "/" });
-          })
-          .catch(() => {
-            message.error(t("loginFailMsg"));
-          });
+        login(values).then((res: { token: string }) => {
+          window.sessionStorage.setItem("token", res["token"]);
+          message.success(t("loginSuccessMsg"));
+          history.replace({ pathname: "/" });
+        });
       }
     });
   };

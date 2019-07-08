@@ -1,4 +1,11 @@
 export default {
+  AUTHENTICATION_FAILED: "您无权处理该资源！",
+  AUTHORIZATION_EXPIRED: "您需要重新登录！",
+  MISSING_PARAMETERS: "缺少参数!",
+  NAME_OR_PASSWORD_ERROR: "用户名或密码错误！",
+  NAME_ALREADY_EXSIT: "用户名已存在!",
+  TAG_IS_USED: "该标签已被使用，无法删除！",
+
   // 通用
   create: "新建",
   submit: "提交",
