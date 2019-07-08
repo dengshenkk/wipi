@@ -46,25 +46,25 @@
 - 请求方式：`POST`
 - 请求地址：`/user/login`
 - 请求参数：
-  | 参数名 | 类型 | 说明 |
-  | -------- | ------ | -------- |
-  | name | string | 用户名 |
-  | password | string | 用户密码 |
+
+  | 参数名     | 类型   | 说明     |
+  | ---------- | ------ | -------- |
+  | `name`     | string | 用户名   |
+  | `password` | string | 用户密码 |
+
 - 错误码：
-  | 错误码 | 说明 |
-  | ------ | ---- |
-  | NAME_OR_PASSWORD_ERROR | 账户或密码错误 |
+
+  | 错误码                   | 说明           |
+  | ------------------------ | -------------- |
+  | `NAME_OR_PASSWORD_ERROR` | 账户或密码错误 |
+
 - 返回值:
 
   ```json
   {
     "status": "ok",
-    "data": {
-      /* user info here */
-    },
-    "token": {
-      /* json-web-token  */
-    }
+    "data": {},
+    "token": ""
   }
   ```
 
@@ -73,7 +73,7 @@
   ```json
   {
     "status": "no",
-    "msg": /* error_code */
+    "msg": ""
   }
   ```
 
@@ -88,22 +88,24 @@
 - 请求方式：`POST`
 - 请求地址：`/user/register`
 - 请求参数：
-  | 参数名 | 类型 | 说明 |
-  | -------- | ------ | -------- |
-  | name | string | 用户名 |
-  | password | string | 用户密码 |
+
+  | 参数名     | 类型   | 说明     |
+  | ---------- | ------ | -------- |
+  | `name`     | string | 用户名   |
+  | `password` | string | 用户密码 |
+
 - 错误码：
-  | 错误码 | 说明 |
-  | ------ | ---- |
-  | NAME_ALREADY_EXSIT | 账户已存在 |
+
+  | 错误码               | 说明       |
+  | -------------------- | ---------- |
+  | `NAME_ALREADY_EXSIT` | 账户已存在 |
+
 - 返回值:
 
   ```json
   {
     "status": "ok",
-    "data": {
-      /* user info here */
-    }
+    "data": {}
   }
   ```
 
@@ -112,7 +114,7 @@
   ```json
   {
     "status": "no",
-    "msg": /* error_code */
+    "msg": ""
   }
   ```
 
@@ -129,17 +131,17 @@
 - 请求方式：`GET`
 - 请求地址：`/user`
 - 错误码：
-  | 错误码 | 说明 |
-  | ------ | ---- |
-  | AUTHENTICATION_FAILED | 认证失败 |
+
+| 错误码                  | 说明     |
+| ----------------------- | -------- |
+| `AUTHENTICATION_FAILED` | 认证失败 |
+
 - 返回值:
 
 ```json
 {
   "status": "ok",
-  "data": [
-    /* users info here */
-  ]
+  "data": []
 }
 ```
 
@@ -148,7 +150,7 @@
 ```json
 {
   "status": "no",
-  "msg": /* error_code */
+  "msg": ""
 }
 ```
 
@@ -161,21 +163,21 @@
 
 <details>
   <ul>
-  
+
 - 请求方式：`GET`
 - 请求地址：`/user/:id`
 - 错误码：
-  | 错误码 | 说明 |
-  | ------ | ---- |
-  | AUTHENTICATION_FAILED | 认证失败 |
+
+| 错误码                  | 说明     |
+| ----------------------- | -------- |
+| `AUTHENTICATION_FAILED` | 认证失败 |
+
 - 返回值:
 
 ```json
 {
   "status": "ok",
-  "data": {
-    /* user info here */
-  }
+  "data": {}
 }
 ```
 
@@ -184,7 +186,7 @@
 ```json
 {
   "status": "no",
-  "msg": /* error_code */
+  "msg": ""
 }
 ```
 
@@ -197,21 +199,21 @@
 
 <details>
   <ul>
-  
+
 - 请求方式：`PATCH`
 - 请求地址：`/user/:id`
 - 错误码：
-  | 错误码 | 说明 |
-  | ------ | ---- |
-  | AUTHENTICATION_FAILED | 认证失败 |
+
+| 错误码                  | 说明     |
+| ----------------------- | -------- |
+| `AUTHENTICATION_FAILED` | 认证失败 |
+
 - 返回值:
 
 ```json
 {
   "status": "ok",
-  "data": {
-    /* user info here */
-  }
+  "data": {}
 }
 ```
 
@@ -220,7 +222,7 @@
 ```json
 {
   "status": "no",
-  "msg": /* error_code */
+  "msg": ""
 }
 ```
 
@@ -233,22 +235,21 @@
 
 <details>
   <ul>
-  
+
 - 请求方式：`POST`
 - 请求地址：`/user/:id?disabled=true`
 - 错误码：
-  | 错误码 | 说明 |
-  | ------ | ---- |
-  | AUTHENTICATION_FAILED | 认证失败 |
+
+  | 错误码                  | 说明     |
+  | ----------------------- | -------- |
+  | `AUTHENTICATION_FAILED` | 认证失败 |
+
 - 返回值:
 
 ```json
 {
   "status": "ok",
-  "data": {
-    /* user info here */,
-    status: 'disabled' // 状态改为禁用
-  }
+  "data": {}
 }
 ```
 
@@ -257,7 +258,7 @@
 ```json
 {
   "status": "no",
-  "msg": /* error_code */
+  "msg": ""
 }
 ```
 
@@ -274,9 +275,11 @@
 - 请求方式：`DELETE`
 - 请求地址：`/user/:id`
 - 错误码：
-  | 错误码 | 说明 |
-  | ------ | ---- |
-  | AUTHENTICATION_FAILED | 认证失败 |
+
+  | 错误码                  | 说明     |
+  | ----------------------- | -------- |
+  | `AUTHENTICATION_FAILED` | 认证失败 |
+
 - 返回值:
 
   ```json
@@ -290,7 +293,7 @@
   ```json
   {
     "status": "no",
-    "msg": /* error_code */
+    "msg": ""
   }
   ```
 
