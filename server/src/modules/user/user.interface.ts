@@ -10,6 +10,7 @@ export interface IUser {
   name: string
   password: string
   role?: string
+  status?: 'disabled' | 'activate'
   createAt?: string
   updateAt?: string
   lastLoginAt?: string
