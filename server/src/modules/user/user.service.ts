@@ -6,16 +6,13 @@ import config from '../../config'
 import { UserEntity } from './user.entity'
 import { IUser, Roles } from './user.interface'
 
-const getRepo = (): Repository<UserEntity> => {
-  return getRepository(UserEntity)
-}
-
 const now = () => {
   return moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
 }
 
 export const createToken = async (user: IUser) => {
-  await updateUser(
+  await updateUserById(
+    user.id,
     {
       ...user,
       lastLoginAt: now(),
@@ -36,7 +33,7 @@ export const createToken = async (user: IUser) => {
 }
 
 export const isAdmin = async (user: IUser): Promise<Boolean> => {
-  return user.role === Roles.admin
+  return user && user.role === Roles.admin
 }
 
 const encrypt = (password: string): string => {
@@ -44,6 +41,53 @@ const encrypt = (password: string): string => {
   const saltPassword = password + ':' + 'plarum_2019'
   const encryptedPasswd = md5.update(saltPassword).digest('hex')
   return encryptedPasswd
+}
+
+const getRepo = (): Repository<UserEntity> => {
+  return getRepository(UserEntity)
+}
+
+export const findUsers = async () => {
+  const repo = getRepo()
+  const users = await repo.find()
+  return users
+}
+
+export const findUserByNameAndPassword = async (user: IUser) => {
+  const repo = getRepo()
+  const ret = await repo
+    .createQueryBuilder('user')
+    .leftJoinAndSelect('user.articles', 'articles')
+    .where('name=:name and password=:password', {
+      name: user.name,
+      password: encrypt(user.password),
+    })
+    .getOne()
+
+  return ret
+}
+
+export const findUserById = async (id: string) => {
+  const repo = getRepo()
+  const user = await repo.findOne(id)
+  return user
+}
+
+export const updateUserById = async (
+  id: string,
+  newInfo: IUser,
+  isCreateToken: boolean = false,
+) => {
+  const repo = getRepo()
+  const oldUser = await findUserById(id)
+  if (newInfo.password && !isCreateToken) {
+    newInfo.password = encrypt(newInfo.password)
+  }
+  const newUser = await repo.merge(oldUser, newInfo, {
+    updateAt: now(),
+  })
+  await repo.save(newUser)
+  return newUser
 }
 
 export const createUser = async (user: object & IUser) => {
@@ -60,51 +104,8 @@ export const createUser = async (user: object & IUser) => {
   return data
 }
 
-export const getUsers = async () => {
-  const repo = getRepo()
-  const users = await repo.find()
-  return users
-}
-
-export const getUser = async (user: IUser) => {
-  const repo = getRepo()
-  const ret = await repo
-    .createQueryBuilder('user')
-    .leftJoinAndSelect('user.articles', 'articles')
-    .where('name=:name and password=:password', {
-      name: user.name,
-      password: encrypt(user.password),
-    })
-    .getOne()
-
-  return ret
-}
-
-export const getUserById = async (id: string) => {
-  const repo = getRepo()
-  const user = await repo.findOne(id)
-  return user
-}
-
-export const updateUser = async (
-  user: IUser,
-  isCreateToken: boolean = false,
-) => {
-  const repo = getRepo()
-  const oldUser = await getUserById(user.id)
-
-  if (user.password && !isCreateToken) {
-    user.password = encrypt(user.password)
-  }
-
-  const newUser = await repo.merge(oldUser, user, {
-    updateAt: now(),
-  })
-  await repo.save(newUser)
-}
-
 export const deleteUserById = async (id: string) => {
   const repo = getRepo()
-  const user = await getUserById(id)
+  const user = await findUserById(id)
   await repo.remove(user)
 }

@@ -4,9 +4,9 @@ import tagController from './tag.controller'
 export function bootstrapTagModule(router: Router) {
   const prefix = '/tag'
 
-  router.get(`${prefix}/`, tagController.getTags.bind(tagController))
-  router.get(`${prefix}/:id`, tagController.getTag.bind(tagController))
-  router.post(`${prefix}`, tagController.createTag.bind(tagController))
-  router.patch(`${prefix}/:id`, tagController.updateTag.bind(tagController))
-  router.delete(`${prefix}/:id`, tagController.deleteTag.bind(tagController))
+  router.get(`${prefix}/`, tagController.findTags)
+  router.get(`${prefix}/:id`, tagController.findTagById)
+  router.post(`${prefix}`, tagController.addTag)
+  router.patch(`${prefix}/:id`, tagController.updateTagById)
+  router.delete(`${prefix}/:id`, tagController.deleteTagById)
 }

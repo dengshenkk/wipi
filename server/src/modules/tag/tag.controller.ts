@@ -1,69 +1,63 @@
 import * as Koa from 'koa'
-import { getRepository, Repository } from 'typeorm'
-import * as HTTPStatusCodes from 'http-status-codes'
-import { TagEntity } from './tag.entity'
-
+import { ErrorStatusCodes } from '../../ErrorStatusCodes'
 import {
-  getTags,
-  getTagsWithArticles,
-  getTagById,
-  getTagByIdWithArticles,
+  addTag,
+  findTags,
+  findTagsWithArticles,
+  findTagById,
+  findTagByIdWithArticles,
+  updateTagById,
+  deleteTagById,
 } from './tag.service'
 
 class TagController {
-  get repo(): Repository<TagEntity> {
-    return getRepository(TagEntity)
+  async addTag(ctx: Koa.Context) {
+    const tag = await addTag(ctx.request.body)
+    ctx.body = { status: 'ok', data: tag }
   }
 
-  async getTags(ctx: Koa.Context) {
-    const tags = await getTags()
-    ctx.body = { data: tags }
+  async findTags(ctx: Koa.Context) {
+    const tags = await findTags()
+    ctx.body = { status: 'ok', data: tags }
   }
 
-  async getTag(ctx: Koa.Context) {
+  async findTagById(ctx: Koa.Context) {
     const id = ctx.params.id
-    const tag = await getTagById(id)
+    const tag = await findTagById(id)
 
     if (!tag) {
-      ctx.throw(HTTPStatusCodes.NOT_FOUND)
+      ctx.throw(404)
+    }
+    ctx.body = { status: 'ok', data: tag }
+  }
+
+  async updateTagById(ctx: Koa.Context) {
+    const id = ctx.params.id
+    const tag = await findTagById(id)
+
+    if (!tag) {
+      ctx.throw(404)
     }
 
-    ctx.body = { data: tag }
+    const updatedTag = await updateTagById(id, ctx.request.body)
+    ctx.body = { status: 'ok', data: updatedTag }
   }
 
-  async createTag(ctx: Koa.Context) {
-    const tag = this.repo.create(ctx.request.body)
-    await this.repo.save(tag)
-    ctx.body = { data: tag }
-  }
-
-  async updateTag(ctx: Koa.Context) {
-    const id = ctx.params.id
-    const tag = await this.repo.findOne(id)
+  async deleteTagById(ctx: Koa.Context) {
+    const tag = await findTagByIdWithArticles(ctx.params.id)
 
     if (!tag) {
-      ctx.throw(HTTPStatusCodes.NOT_FOUND)
-    }
-
-    const updatedTag = await this.repo.merge(tag, ctx.request.body)
-    this.repo.save(updatedTag)
-    ctx.body = { data: this.updateTag }
-  }
-
-  async deleteTag(ctx: Koa.Context) {
-    const tag = await getTagByIdWithArticles(ctx.params.id)
-
-    if (!tag) {
-      ctx.throw(HTTPStatusCodes.NOT_FOUND)
+      ctx.throw(404)
     }
 
     if (tag.articles && tag.articles.length) {
-      ctx.throw(HTTPStatusCodes.BAD_REQUEST)
+      ctx.throw(400, ErrorStatusCodes.TAG_IS_USED)
     }
 
-    await this.repo.remove(tag) // 注意与 delete 的区别
+    await deleteTagById(ctx.params.id)
 
-    ctx.status = HTTPStatusCodes.NO_CONTENT
+    ctx.status = 204
+    ctx.body = { status: 'ok' }
   }
 }
 

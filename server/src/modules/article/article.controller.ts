@@ -1,39 +1,40 @@
 import * as Koa from 'koa'
 import { getRepository, Repository } from 'typeorm'
-import * as HTTPStatusCodes from 'http-status-codes'
+import { ErrorStatusCodes } from '../../ErrorStatusCodes'
 import * as moment from 'moment'
-import { getTagById } from '../tag/tag.service'
+import { findTagById } from '../tag/tag.service'
 import { ArticleEntity } from './article.entity'
 import { marked } from './article.service'
 import { isAdmin } from '../user/user.service'
 
-class ArticleController {
-  get repo(): Repository<ArticleEntity> {
-    const repo: Repository<ArticleEntity> = getRepository(ArticleEntity)
-    return repo
-  }
+const getRepo = (): Repository<ArticleEntity> => {
+  const repo: Repository<ArticleEntity> = getRepository(ArticleEntity)
+  return repo
+}
 
-  async getArticles(ctx: Koa.Context) {
-    const articles = await this.repo
+class ArticleController {
+  async findArticles(ctx: Koa.Context) {
+    const repo = getRepo()
+    const articles = await repo
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.tags', 'tags')
       .leftJoinAndSelect('article.author', 'author')
       .getMany()
-    ctx.body = { data: articles }
+    ctx.body = { status: 'ok', data: articles }
   }
 
-  async getArticle(ctx: Koa.Context) {
+  async findArticleById(ctx: Koa.Context) {
     const id = ctx.params.id
-    const article = await this.repo.findOne(id)
-
+    const repo = getRepo()
+    const article = await repo.findOne(id)
     if (!article) {
-      ctx.throw(HTTPStatusCodes.NOT_FOUND)
+      ctx.throw(404)
     }
-
-    ctx.body = { data: article }
+    ctx.body = { status: 'ok', data: article }
   }
 
-  async createArticle(ctx: Koa.Context) {
+  async addArticle(ctx: Koa.Context) {
+    const repo = getRepo()
     let currentUser = ctx.request.body.currentUser
     const { html, toc } = marked(ctx.request.body.content)
     const { html: summary } = marked(ctx.request.body.summary)
@@ -41,10 +42,9 @@ class ArticleController {
     try {
       tags = tags.replace(/\[|\]/g, '').split(',')
     } catch (e) {}
-    tags = await Promise.all(tags.map(getTagById))
+    tags = await Promise.all(tags.map(findTagById))
     delete ctx.request.body.tags
-
-    const article = this.repo.create({
+    const article = repo.create({
       ...ctx.request.body,
       html,
       tags,
@@ -52,13 +52,13 @@ class ArticleController {
       toc,
       author: currentUser.id,
     })
-
-    await this.repo.save(article)
+    await repo.save(article)
     ctx.body = { data: article }
   }
 
-  async updateArticle(ctx: Koa.Context) {
-    const article = await this.repo
+  async updateArticleById(ctx: Koa.Context) {
+    const repo = getRepo()
+    const article = await repo
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.author', 'author')
       .where('article.id=:id')
@@ -69,25 +69,25 @@ class ArticleController {
     const currentUser = ctx.request.body.currentUser
 
     if (author.id !== currentUser.id) {
-      ctx.throw(HTTPStatusCodes.FORBIDDEN)
+      ctx.throw(403, ErrorStatusCodes.AUTHENTICATION_FAILED)
     }
 
     if (!article) {
-      ctx.throw(HTTPStatusCodes.NOT_FOUND)
+      ctx.throw(404)
     }
 
     let tags = ctx.request.body.tags
     try {
       tags = tags.replace(/\[|\]/g, '').split(',')
     } catch (e) {}
-    tags = await Promise.all(tags.map(getTagById))
+    tags = await Promise.all(tags.map(findTagById))
 
     const { html, toc } = marked(ctx.request.body.content)
     const { html: summary } = marked(ctx.request.body.summary)
 
     delete ctx.request.body.tags
 
-    const updatedArticle = await this.repo.merge(article, {
+    const updatedArticle = await repo.merge(article, {
       ...ctx.request.body,
       tags,
       summary,
@@ -95,12 +95,13 @@ class ArticleController {
       toc,
       updateAt: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
     })
-    this.repo.save(updatedArticle)
+    repo.save(updatedArticle)
     ctx.body = { data: updatedArticle }
   }
 
-  async deleteArticle(ctx: Koa.Context) {
-    const article = await this.repo
+  async deleteArticleById(ctx: Koa.Context) {
+    const repo = getRepo()
+    const article = await repo
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.author', 'author')
       .where('article.id=:id')
@@ -108,18 +109,19 @@ class ArticleController {
       .getOne()
 
     if (!article) {
-      ctx.throw(HTTPStatusCodes.NOT_FOUND)
+      ctx.throw(404)
     }
 
     const currentUser = ctx.request.body.currentUser
     const can = await isAdmin(currentUser)
 
     if (!can && article.author.id !== currentUser.id) {
-      ctx.throw(HTTPStatusCodes.FORBIDDEN)
+      ctx.throw(403, ErrorStatusCodes.AUTHENTICATION_FAILED)
     }
 
-    await this.repo.remove(article) // 注意与 delete 的区别
-    ctx.status = HTTPStatusCodes.NO_CONTENT
+    await repo.remove(article) // 注意与 delete 的区别
+    ctx.status = 204
+    ctx.body = { status: 'ok' }
   }
 }
 

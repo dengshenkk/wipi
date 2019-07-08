@@ -2,6 +2,7 @@ import * as Koa from 'koa'
 import * as Router from 'koa-router'
 import { bootstrapModules } from './bootstrapModules'
 import { useMiddlewares } from './useMiddlewares'
+import { log } from './log'
 
 export function bootstrapApp(port: number) {
   const app: Koa = new Koa()
@@ -11,10 +12,7 @@ export function bootstrapApp(port: number) {
   useMiddlewares(app)
   bootstrapModules(app, router)
 
-  // 错误日志
-  app.on('error', console.error)
-
   app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`)
+    log.info(`服务运行在 http://localhost:${port}`)
   })
 }
