@@ -2,8 +2,12 @@ import axios from "axios";
 import { getHistory, getTranslate } from "../history";
 import { message } from "antd";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const http = axios.create({
-  baseURL: "http://localhost:4000/api/v1",
+  baseURL: isProd
+    ? "http://localhost:4000/api/v1"
+    : "http://localhost:4000/api/v1",
   timeout: 5000
 });
 
