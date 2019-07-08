@@ -9,7 +9,7 @@ const connectionOps: ConnectionOptions = {
   username: config.database.username,
   password: config.database.password,
   database: config.database.database,
-  entities: ['./**/*.entity.ts'],
+  entities: config.database.entities,
   synchronize: true,
 }
 

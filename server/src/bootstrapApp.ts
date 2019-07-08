@@ -2,15 +2,11 @@ import * as Koa from 'koa'
 import * as Router from 'koa-router'
 import { bootstrapModules } from './bootstrapModules'
 import { useMiddlewares } from './useMiddlewares'
-import config from './config'
 
 export function bootstrapApp(port: number) {
   const app: Koa = new Koa()
 
-  const routerOpts: Router.IRouterOptions = {
-    prefix: config.router.prefix,
-  }
-  const router: Router = new Router(routerOpts)
+  const router: Router = new Router()
 
   useMiddlewares(app)
   bootstrapModules(app, router)

@@ -5,6 +5,7 @@ export interface IConfig {
     username: string
     password: string
     database: string
+    entities: string[]
   }
   app: {
     port: number

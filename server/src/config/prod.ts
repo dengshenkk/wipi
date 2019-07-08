@@ -7,12 +7,13 @@ const config: IConfig = {
     username: 'plarum',
     password: 'plarum',
     database: 'postgres',
+    entities: ['./**/*.entity.js'],
   },
   app: {
     port: 4000,
   },
   router: {
-    prefix: '/',
+    prefix: '/api/v1',
   },
   token: {
     secret: 'plarum',
