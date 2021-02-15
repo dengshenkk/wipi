@@ -235,6 +235,7 @@ export class ArticleService {
 
     if (data && data.needPassword && !isAdmin) {
       delete data.content;
+      delete data.html;
     }
 
     return data;
