@@ -189,7 +189,7 @@ const File: NextPage<IFileProps> = ({ files: defaultFiles = [], total }) => {
               }}
               dataSource={data}
               renderItem={(file: IFile) => (
-                <List.Item>
+                <List.Item key={file.id}>
                   <Card
                     hoverable
                     cover={
